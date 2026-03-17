@@ -3,3 +3,12 @@ fetch("/components/nav.html")
     .then((responseText) => {
         document.querySelector('.container').insertAdjacentHTML("afterbegin", responseText);
     });
+
+const $navStudent = document.querySelector(".c-student-ct");
+const $navManager = document.querySelector(".c-manager-ct"); 
+const $navlecture = document.querySelector(".c-lecture-ct");
+
+if($navStudent.contains('c-student')) {
+    
+}
+
