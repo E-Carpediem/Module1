@@ -102,13 +102,13 @@ label {
 }
 
 
-#userEmail {
+#su-user-email {
     margin-bottom: 54px;
 }
 
-#userBirth,
-#userAge,
-#userName {
+#su-user-birth,
+#su-user-age,
+#su-user-name {
     margin-bottom: 28px;
 }
 
@@ -145,4 +145,14 @@ input[type=checkbox] {
     zoom: 1.5;
     accent-color: #2F4156;
 
+}
+
+.su-check-ct>input {
+    margin-right: 15px;
+    zoom: 1.5;
+    accent-color: #2F4156;
+}
+
+.su-check-ct>label {
+    margin-right: 20px;
 }

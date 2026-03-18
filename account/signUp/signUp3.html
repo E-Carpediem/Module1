@@ -15,64 +15,80 @@
         <form>
             <div class="su-profile-ct">
                 <label>프로필 이미지</label>
-                <img>
-                <input id="lectureImg" type="file" hidden>
-                <label for="lectureImg">이미지 선택</label>
+                <div>
+                    <img>
+                    <input id="su-lecture-img" type="file" hidden accept="image/*">
+                    <label for="su-lecture-img">이미지 선택</label>
+                </div>
             </div>
-            <label for="userId">아이디</label>
+            <label for="su-user-id">아이디</label>
             <div class="su-id-check-ct">
-                <input placeholder="아이디 입력" type="text" id="userId"><button type="button">중복확인</button>
+                <input placeholder="아이디 입력" type="text" id="su-user-id"><button type="button">중복확인</button>
             </div>
             <p>2~8자로 입력해주세요</p>
 
-            <label for="userPwd">비밀번호</label>
-            <input placeholder="비밀번호 입력" type="password" id="userPwd">
+            <label for="su-user-pwd">비밀번호</label>
+            <input placeholder="비밀번호 입력" type="password" id="su-user-pwd">
             <p>2~8자로 입력해주세요</p>
 
-            <label for="userPwdChekc">비밀번호 확인</label>
-            <input placeholder="비밀번호 재입력" type="password" id="userPwdChekc">
+            <label for="su-user-pwdcheck">비밀번호 확인</label>
+            <input placeholder="비밀번호 재입력" type="password" id="su-user-pwdcheck">
             <p>2~8자로 입력해주세요</p>
 
-            <label for="userName">이름</label>
-            <input placeholder="이름 입력" type="text" id="userName">
+            <label for="su-user-name">이름</label>
+            <input placeholder="이름 입력" type="text" id="su-user-name">
 
 
-            <label for="userAge">나이</label>
-            <input placeholder="나이 입력" type="number" id="userAge">
+            <label for="su-user-age">나이</label>
+            <input placeholder="나이 입력" type="number" id="su-user-age">
 
 
-            <label for="userPone">전화번호</label>
-            <input placeholder="전화번호 입력" type="number" id="userPone">
+            <label for="su-user-pone">전화번호</label>
+            <input placeholder="전화번호 입력" type="number" id="su-user-pone">
             <p>2~8자로 입력해주세요</p>
 
-            <label for="userEmail">이메일</label>
-            <input placeholder="이메일 입력" id="userEmail" type="email">
+            <label for="su-user-email">이메일</label>
+            <input placeholder="이메일 입력" id="su-user-email" type="email">
 
 
             <label>성별</label>
             <div class="su-check-ct">
-                <input type="radio" id="male" name="gender"><label for="male">남성</label>
-                <input type="radio" id="female" name="gender"><label for="female">여성</label>
+                <input type="radio" id="su-male" name="gender"><label for="su-male">남성</label>
+                <input type="radio" id="su-female" name="gender"><label for="su-female">여성</label>
             </div>
 
-            <label for="userBirth">생년월일</label>
-            <input placeholder="생년월일" type="date" id="userBirth">
+            <label for="su-user-birth">생년월일</label>
+            <input placeholder="생년월일" type="date" id="su-user-birth">
+
+            <label>자격증 또는 경력증명서</label>
+            <div class="su-qualification-ct">
+                <label for="su-lecture-info">파일선택</label>
+                <input type="file" id="su-lecture-info" hidden multiple>
+                <span>선택된 파일 없음</span>
+            </div>
 
 
             <section>
                 <label>약관동의</label>
                 <div class="su-agree-ct">
                     <div>
-                        <input type="checkbox"><label>모두 동의합니다.</label>
+                        <input id="su-all-agree" type="checkbox">
+                        <label for="su-all-agree">모두 동의합니다.</label>
                     </div>
                     <div>
-                        <input type="checkbox"><label>이용약관 동의</label><span>자세히 보기</span><br>
+                        <input id="su-agree1" type="checkbox">
+                        <label for="su-agree1">이용약관 동의</label>
+                        <span>자세히 보기</span><br>
                     </div>
                     <div>
-                        <input type="checkbox"><label>개인정보 처리방침 동의</label><span>자세히 보기</span><br>
+                        <input id="su-agree2" type="checkbox">
+                        <label for="su-agree2">개인정보 처리방침 동의</label>
+                        <span>자세히 보기</span><br>
                     </div>
                     <div>
-                        <input type="checkbox"><label>마케팅 정보 수신 동의</label><span>자세히 보기</span><br>
+                        <input id="su-agree3" type="checkbox">
+                        <label for="su-agree3">마케팅 정보 수신 동의</label>
+                        <span>자세히 보기</span><br>
                     </div>
                 </div>
             </section>
