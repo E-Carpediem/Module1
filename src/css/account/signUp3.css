@@ -1,0 +1,43 @@
+@import '../reset.css';
+
+
+.su-profile-ct>div>img {
+    width: 160px;
+    height: 160px;
+    border-radius: 20px;
+    border: 2px solid #D9D9D9;
+    background: #F3F4F6;
+}
+
+.su-profile-ct>div>label[for="su-lecture-img"],
+.su-qualification-ct>label {
+    border-radius: 10px;
+    border: 2px solid #2F4156;
+    background: #FFF;
+    padding: 16px 31.891px 18px 32px;
+    color: #2F4156;
+    font-family: "Pretendard Variable";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 30px;
+    text-align: center;
+    /* 150% */
+
+}
+
+.su-qualification-ct {
+    margin: 11px 0 54px 0;
+}
+
+.su-qualification-ct>label {
+    display: inline-block;
+}
+
+.su-profile-ct>div {
+    display: flex;
+    align-items: center;
+    gap: 59px;
+    margin-bottom: 28px;
+    margin-top: 10px;
+}
