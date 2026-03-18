@@ -139,3 +139,10 @@ span {
     text-decoration-line: underline;
     text-decoration-style: solid;
 }
+
+input[type=checkbox] {
+
+    zoom: 1.5;
+    accent-color: #2F4156;
+
+}
