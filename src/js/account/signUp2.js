@@ -166,6 +166,18 @@ function SignUp() {
         inputId.forEach((key) => {
             changeRed(key);
         })
+        const $inputs = document.querySelectorAll('input');
+        $inputs.map(input => {
+            return input.classList.contains('su-border-red');
+        }).reduce((a, b) => {
+            a ? b = true : b = false;
+        })
+
+        if (true) {
+            alert('회원가입 성공')
+        } else {
+            alert('회원가입 실패');
+        }
 
     })
 
