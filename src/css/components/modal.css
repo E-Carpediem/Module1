@@ -46,7 +46,7 @@
     background: #f1f1f1;
     border-radius: 0 0 20px 20px;
 }
-#modal-close:hover {
+.modal-close:hover {
     background: #f1f1f1;
     border-radius: 0 0 0 20px;
 }
@@ -54,7 +54,7 @@
     background: #f1f1f1;
     border-radius: 0 0 20px 0;
 }
-#modal-close {
+.modal-close {
     border-right: 1px solid black;
 }
 @media (max-width: 1440px) {

@@ -88,8 +88,13 @@
                         <section id="cd-content-time">강의 시간: </section>
                         <section id="cd-content-level">난이도: </section>
                     </article>
-                    <button class="cd-btn modal-open-one-btn" id="cd-btn-color1">수정하기</button>
-                    <button class="cd-btn modal-open-two-btn" id="cd-btn-color2">삭제하기</button>
+                    <button class="cd-btn modal-open-two-btn" id="cd-btn-color1"
+                    data-url="/lecture/lectureUpdate/lectureUpdate.html"
+                    data-message="
+                    수정하시겠습니까?<br>
+                    확인 버튼을 누르면 강의 수정 페이지로 이동합니다.">수정하기</button>
+                    <button class="cd-btn modal-open-two-btn" id="cd-btn-color2" 
+                    data-url="/lecture/lectureContentTotal/LectureContentTotal.html">삭제하기</button>
                 </article>
             </article>
         </main>

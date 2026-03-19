@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/src/css/reset.css">
+    <style>
+        .le-side-margin {
+            margin: 0 150px;
+        }
+
+        #le-title {
+            font-size: 48px;
+            font-weight: 600;
+            margin: 35px auto 0px 35px;
+        }
+
+        #le-preview {
+            color: #2f4156;
+            font-size: 20px;
+            font-weight: 400;
+            margin: 0px auto 15px 35px;
+        }
+
+        .le-enroll-container {
+            width: 89%;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
+        }
+
+        .le-data-container {
+            width: 100%;
+            border-radius: 20px;
+            border: 2px solid #A0A0A0;
+            background: #FCFCFC;
+            padding: 20px 65px 40px;
+        }
+
+        .le-curry-container {
+            width: 100%;
+            border-radius: 20px;
+            border: 2px solid #A0A0A0;
+            background: #FCFCFC;
+            padding: 20px 65px 40px;
+        }
+
+        #le-content-form-title {
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        label {
+            color: #2F4156;
+            font-size: 20px;
+            font-weight: 400;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <main class="le-side-margin">
+            <section id="le-title">강의 등록</section>
+            <p id="le-preview">새로운 강의를 등록하고 커리큘럼을 구성하세요</p>
+            <article class="le-enroll-container">
+                <article class="le-data-container">
+                    <p id="le-content-form-title">강의 기본 정보</p>
+                    <form method="post" action="" name="le-content-form">
+                        <label for="le-content-image">강의 썸네일 사진*</label><br>
+                        <input type="image" name="le-content-image" id="le-content-image" required>
+                    </form>
+                </article>
+                <article class="le-curry-container"></article>
+            </article>
+        </main>
+    </div>
+
+    <script type="module" src="/src/js/components/includeHeader.js"></script>
+    <script type="module" src="/src/js/components/includeNav.js"></script>
+</body>
+
+</html>
