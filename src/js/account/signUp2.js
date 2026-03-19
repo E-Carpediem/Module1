@@ -46,7 +46,7 @@ function SignUp() {
         }
     }
 
-
+    //전화번호 검사
     const phoneCheck = () => {
         if ($('#su-user-pone').value.length < 13) {
             removeBlue('#su-user-pone');
@@ -173,6 +173,36 @@ function SignUp() {
     })
 
 
+    //프로필 이미지
+    if ($('#su-lecture-img') !== null) {
+        $('#su-lecture-img').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    $('.su-lecture-profile-img').src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        })
+    }
+
+
+    //자격 증명
+    if ($('#su-lecture-info') !== null) {
+        $('#su-lecture-info').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const fileNames = [...e.target.files].map((f) => f.name).join(', ');
+                $('.su-selected-file').innerText = `${fileNames}`;
+            } else {
+                $('.su-selected-file').innerText = `선택된 파일 없음`;
+            }
+
+        })
+    }
+
+
 
     //제출 이벤트
     $('.su-signup-form').addEventListener('submit', (e) => {
@@ -191,7 +221,7 @@ function SignUp() {
         }).reduce((a, b) => {
             return a || b;
         })
-        console.log(result);
+
 
         if (result) {
             alert('회원가입 실패');
