@@ -9,6 +9,15 @@ const user = {
     }
 }
 
+const myInfo = {
+    setSessionStorage(key, value) {
+        sessionStorage.setItem(key, JSON.stringify(value));
+    },
+    getSessionStorage(key) {
+        return JSON.parse(sessionStorage.getItem(key))
+    }
+}
+
 
 const activeModal = ((clickE, message) => {
     document.querySelector('.active-modal').innerHTML = `
@@ -88,19 +97,23 @@ function closeModal(modal) {
 
 // user.setLocalStorage('userList', userList);
 
-$('.l-login-btn').addEventListener('click', () => {
+$('.l-login-main>form').addEventListener('submit', (e) => {
+    e.preventDefault();
     const userInfo = user.getLocalStorage('userList').find(u => { return u.userId === $("#su-login-id").value });
-    if (userInfo) {
+    if (!$("#su-login-id").value.trim() || !$("#su-login-pwd")) {
+        activeModal(() => { closeModal($('.modal')); $('#su-login-id').focus(); }, '아이디와 비밀번호를 입력해주세요.');
+    } else if (userInfo) {
         if (userInfo.password === $('#su-login-pwd').value) {
-            alert('회원가입 성공')
-            user.setLocalStorage('myInfo', userInfo);
+            myInfo.setSessionStorage('myInfo', userInfo);
+            activeModal(() => movePage('https://www.naver.com'), '로그인에 성공하였습니다.');
         } else {
-            alert('회원가입 실패');
+            activeModal(() => { closeModal($('.modal')); $('#su-login-id').focus(); }, '아이디와 비밀번호가 일치하지 않습니다.');
         }
     }
     else {
-        alert('회원가입 실패');
+        activeModal(() => { closeModal($('.modal')); $('#su-login-id').focus(); }, '존재하지 않는 아이디입니다.');
     }
+
     $('.l-login-main>form').reset();
 
 });
