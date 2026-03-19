@@ -13,11 +13,11 @@
     <div class="container">
         <main class="su-main">
             <h2>강사 회원가입</h2>
-            <form>
+            <form class="su-signup-form">
                 <div class="su-profile-ct">
                     <label>프로필 이미지</label>
                     <div>
-                        <img>
+                        <img class="su-lecture-profile-img">
                         <input id="su-lecture-img" type="file" hidden accept="image/*">
                         <label for="su-lecture-img">이미지 선택</label>
                     </div>
@@ -65,7 +65,7 @@
                 <div class="su-qualification-ct">
                     <label for="su-lecture-info">파일선택</label>
                     <input type="file" id="su-lecture-info" hidden multiple>
-                    <span>선택된 파일 없음</span>
+                    <span class="su-selected-file">선택된 파일 없음</span>
                 </div>
 
 
@@ -77,17 +77,17 @@
                             <label for="su-all-agree">모두 동의합니다.</label>
                         </div>
                         <div>
-                            <input id="su-agree1" type="checkbox">
+                            <input id="su-agree1" class="su-agree-check" type="checkbox">
                             <label for="su-agree1">이용약관 동의</label>
                             <span>자세히 보기</span><br>
                         </div>
                         <div>
-                            <input id="su-agree2" type="checkbox">
+                            <input id="su-agree2" class="su-agree-check" type="checkbox">
                             <label for="su-agree2">개인정보 처리방침 동의</label>
                             <span>자세히 보기</span><br>
                         </div>
                         <div>
-                            <input id="su-agree3" type="checkbox">
+                            <input id="su-agree3" class="su-agree-check" type="checkbox">
                             <label for="su-agree3">마케팅 정보 수신 동의</label>
                             <span>자세히 보기</span><br>
                         </div>
@@ -99,6 +99,7 @@
         </main>
     </div>
     <script src="/src/js/components/includeHeader.js"></script>
+    <script src="../../src/js/account/signUp2.js"></script>
 
 </body>
 
