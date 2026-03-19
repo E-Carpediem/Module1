@@ -18,6 +18,7 @@
         }
 
         #le-preview {
+            color: #2f4156;
             font-size: 20px;
             font-weight: 400;
             margin: 0px auto 15px 35px;
@@ -35,6 +36,26 @@
             border-radius: 20px;
             border: 2px solid #A0A0A0;
             background: #FCFCFC;
+            padding: 20px 65px 40px;
+        }
+
+        .le-curry-container {
+            width: 100%;
+            border-radius: 20px;
+            border: 2px solid #A0A0A0;
+            background: #FCFCFC;
+            padding: 20px 65px 40px;
+        }
+
+        #le-content-form-title {
+            font-size: 24px;
+            font-weight: 400;
+        }
+
+        label {
+            color: #2F4156;
+            font-size: 20px;
+            font-weight: 400;
         }
     </style>
 </head>
@@ -45,7 +66,13 @@
             <section id="le-title">강의 등록</section>
             <p id="le-preview">새로운 강의를 등록하고 커리큘럼을 구성하세요</p>
             <article class="le-enroll-container">
-                <article class="le-data-container"></article>
+                <article class="le-data-container">
+                    <p id="le-content-form-title">강의 기본 정보</p>
+                    <form method="post" action="" name="le-content-form">
+                        <label for="le-content-image">강의 썸네일 사진*</label><br>
+                        <input type="image" name="le-content-image" id="le-content-image" required>
+                    </form>
+                </article>
                 <article class="le-curry-container"></article>
             </article>
         </main>
