@@ -31,6 +31,7 @@ $(".le-content-level").addEventListener("change", () => {
     $(".le-content-level").classList.add("selected");
 });
 
+// 소제목 추가, 대제목 추가 기능
 const formContainer = $(".le-form-container");
 
 function createSmallHTML(bigIndex, smallIndex) {

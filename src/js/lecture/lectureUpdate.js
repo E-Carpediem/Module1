@@ -1,4 +1,5 @@
 const $ = (selector) => document.querySelector(selector)
+const $$ = (selector) => document.querySelectorAll(selector);
 
 // 저장소 객체 (데이터 저장 및 읽어오는 기능)
 const store = {
@@ -10,6 +11,7 @@ const store = {
     }
 }
 
+// 강의 동영상 썸네일 추가 및 적용
 if ($('#le-content-img') !== null) {
     $('#le-content-img').addEventListener('change', (e) => {
         const file = e.target.files[0];
@@ -28,6 +30,99 @@ if ($('#le-content-img') !== null) {
 $(".le-content-level").addEventListener("change", () => {
     $(".le-content-level").classList.add("selected");
 });
+
+
+// 소제목 추가, 대제목 추가 기능
+const formContainer = $(".le-form-container");
+
+function createSmallHTML(bigIndex, smallIndex) {
+    const lessonNumber = `${bigIndex}-${smallIndex}`;
+
+    return `
+        <div class="le-curry-small">
+            <p class="le-input-title">강의 동영상</p>
+            <div class="le-small-container">
+                <div class="le-text-container">
+                    <label class="le-input-title" for="le-lesson-title-${lessonNumber}">소제목 ${lessonNumber}*</label><br>
+                    <input
+                        type="text"
+                        name="le-lesson-title-${lessonNumber}"
+                        class="le-lesson-title"
+                        id="le-lesson-title-${lessonNumber}"
+                        required
+                    >
+                </div>
+                <div class="le-lesson-img">
+                    <label class="le-input-title">동영상 파일*</label><br>
+                    <label for="le-lesson-img-${lessonNumber}" class="le-lesson-input">첨부</label>
+                    <input
+                        class="le-img-data"
+                        id="le-lesson-img-${lessonNumber}"
+                        name="le-lesson-img-${lessonNumber}"
+                        type="file"
+                        required
+                    >
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function createBigHTML(bigIndex) {
+    return `
+        <div class="le-add-big">
+            <div class="le-curry-big">
+                <label class="le-input-title" for="le-content-curry${bigIndex}">대제목${bigIndex}*</label><br>
+                <input
+                    type="text"
+                    name="le-content-curry"
+                    class="le-content-curry"
+                    id="le-content-curry${bigIndex}"
+                    required
+                >
+            </div>
+
+            ${createSmallHTML(bigIndex, 1)}
+            ${createSmallHTML(bigIndex, 2)}
+
+            <div class="le-add-title le-add-small">+ 소제목 추가</div>
+        </div>
+    `;
+}
+
+formContainer.addEventListener("click", (e) => {
+    if (e.target.id === "le-add-big") {
+        console.log(e.target.id);
+        const nextBigIndex = getNextBigIndex();
+        e.target.insertAdjacentHTML("beforebegin", createBigHTML(nextBigIndex));
+        return;
+    }
+
+    if (e.target.classList.contains("le-add-small")) {
+        console.log(e.target.classList.contains("le-add-small"));
+        const currentGroup = e.target.closest(".le-add-big");
+        console.log('?',currentGroup);
+        const bigInput = currentGroup.querySelector(".le-content-curry");
+        console.log('??',bigInput);
+        const bigIndex = bigInput.id.replace("le-content-curry", "");
+        console.log('???',bigIndex);
+        const nextSmallIndex = getNextSmallIndex(currentGroup);
+        console.log('????',nextSmallIndex);
+
+        e.target.insertAdjacentHTML(
+            "beforebegin",
+            createSmallHTML(bigIndex, nextSmallIndex)
+        );
+    }
+});
+
+function getNextBigIndex() {
+    return $$(".le-content-curry").length + 1;
+}
+
+function getNextSmallIndex(groupElement) {
+    return groupElement.querySelectorAll(".le-curry-small").length + 1;
+}
 
 
 
