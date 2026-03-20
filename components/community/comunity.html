@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../src/css/reset.css">
+    <link rel="stylesheet" href="../../src/css/components/contentDetail.css">
+    <link rel="stylesheet" href="../../src/css/components/comunity.css">
+</head>
+
+<body>
+    <div class="top-container">
+        <main class="cd-side-margin">
+            <article class="cd-lecture-img">사진</article>
+            <article class="cd-main-container">
+                <article class="cd-main-content">
+                    <article class="cd-main-nav">
+                        <p class="cd-nav-title">강의소개</p>
+                        <p class="cd-nav-title">커리큘럼</p>
+                        <p class="cd-nav-title">커뮤니티</p>
+                    </article>
+                    <article class="cd-long-line">
+                        <section class="cd-short-line" id="cd-short-line1"></section>
+                        <section class="cd-short-line" id="cd-short-line2"></section>
+                    </article>
+                    <article id="cd-curry-container">
+                        <section class="cd-content-index" id="cd-content-curry">커뮤니티</section>
+                        <sectiion class="cm-search-filter-ct">
+                            <button class="cm-no-reply-btn">미답변</button>
+                            <button class="cm-reply-btn">답변</button>
+                            <div class="cm-search-div">
+                                <input type="text" placeholder="검색어를 입력해주세요">
+                                <img src="../../src/assets/img/searchComunity.svg">
+                            </div>
+                        </sectiion>
+                        <section class="cm-comunity-question">
+                            <div class="cm-comunity-filter cm-reply">답변</div>
+                            <h3>질문 제목</h3>
+                            <div class="cm-name-date">
+                                <p>작성자</p>
+                                <p>일시</p>
+                            </div>
+                        </section>
+                        <section class="cm-comunity-question">
+                            <div class="cm-comunity-filter cm-no-reply">미답변</div>
+
+                            <h3>질문 제목</h3>
+                            <div class="cm-name-date">
+                                <p>작성자</p>
+                                <p>일시</p>
+                            </div>
+
+                        </section>
+                    </article>
+                </article>
+                <article class="cd-content-box">
+                    <section id="price">강의 제목</section>
+                    <article class="cd-content-info">
+                        <section id="cd-lecturer-name">강사명: </section>
+                        <section id="cd-use-time">이용 기간: 무제한</section>
+                        <section id="cd-content-time">강의 시간: </section>
+                        <section id="cd-content-level">난이도: </section>
+                    </article>
+                    <button class="cd-btn modal-open-two-btn" id="cd-btn-color1"
+                        data-url="/lecture/lectureUpdate/lectureUpdate.html" data-message="
+                    수정하시겠습니까?<br>
+                    확인 버튼을 누르면 강의 수정 페이지로 이동합니다.">질문하기</button>
+                    <button class="cd-btn modal-open-two-btn" id="cd-btn-color2"
+                        data-url="/lecture/lectureContentTotal/LectureContentTotal.html">신청하기</button>
+                </article>
+            </article>
+        </main>
+    </div>
+
+    <div class="active-modal"></div>
+    <script type="module" src="../../src/js/components/includeHeader.js"></script>
+    <script type="module" src="../../src/js/components/includeNav.js"></script>
+    <script type="module" src="../../src/js/components/modalOneButton.js"></script>
+    <script type="module" src="../../src/js/components/modalTwoButton.js"></script>
+</body>
+
+</html>
