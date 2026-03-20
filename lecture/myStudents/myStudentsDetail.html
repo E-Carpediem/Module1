@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/css/lecture/myStudentsDetail.css">
+    <link rel="stylesheet" href="/src/css/reset.css">
+    <title>CARDI</title>
+
+    <link rel="stylesheet" href="/src/css/reset.css">
+    <link rel="stylesheet" href="/src/css/lecture/myStudentsDetail.css">
+</head>
+
+<body>
+    <div class="top-container">
+        <div class="msd-page-container">
+            <div class="msd-page-content">
+
+                <div class="msd-header">
+                    <div class="msd-header-left">
+                        <h1 class="msd-header-title">수강생 상세 조회</h1>
+
+                        <div class="msd-lecture-box">
+                            <span class="msd-lecture-title">강의 제목 텍스트가 들어가는 자리입니다.</span>
+                            <span class="msd-lecture-category">CSS</span>
+                        </div>
+                    </div>
+
+                    <div class="msd-header-stats-box">
+                        <div class="msd-stat-card">
+                            <div class="msd-stat-card-content">
+                                <img src="/src/assets/img/manager-student.svg">
+                                <p class="msd-stat-label">수강생</p>
+                            </div>
+                            <p class="msd-stat-value">97</p>
+                        </div>
+
+                        <div class="msd-stat-card">
+                            <div class="msd-stat-card-content">
+                                <img src="/src/assets/img/manager-contents.svg">
+                                <p class="msd-stat-label">평균 수강률</p>
+                            </div>
+                            <p class="msd-stat-value">85.3 %</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="msd-table-header">
+                    <span>이름</span>
+                    <span>이메일</span>
+                    <span>수강 신청일</span>
+                    <span>진도율</span>
+                    <span>상태</span>
+                </div>
+
+                <div class="msd-student-list">
+
+                    <div class="msd-student-row">
+                        <span class="col name">홍길동</span>
+                        <span class="col email">hongGilDong@admin.com</span>
+                        <span class="col date">2025-03-01</span>
+
+                        <div class="col progress">
+                            <div class="msd-progress-bar">
+                                <div class="msd-progress-fill" style="width: 70%;"></div>
+                            </div>
+                            <span class="msd-progress-text">70%</span>
+                        </div>
+
+                        <div class="col status">
+                            <div class="msd-student-status-box">
+                                <span class="msd-student-status">수강중</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="msd-student-row">
+                        <span class="col name">홍길동</span>
+                        <span class="col email">hongGilDong@admin.com</span>
+                        <span class="col date">2025-02-10</span>
+
+                        <div class="col progress">
+                            <div class="msd-progress-bar">
+                                <div class="msd-progress-fill" style="width: 100%;"></div>
+                            </div>
+                            <span class="msd-progress-text">100%</span>
+                        </div>
+
+                        <div class="col status">
+                            <div class="msd-student-status-box completed">
+                                <span class="msd-student-status">수강완료</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/js/components/includeHeader.js"></script>
+    <script src="/src/js/components/includeNav.js"></script>
+</body>
+
+</html>

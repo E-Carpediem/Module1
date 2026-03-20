@@ -1,0 +1,184 @@
+.msd-page-container {
+    margin: 0 50px;
+}
+
+.msd-page-content {
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.msd-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+}
+
+.msd-header-left {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    width: 55%;
+}
+
+.msd-header-title {
+    color: #2F4156;
+    font-size: 48px;
+    margin: 0;
+    font-weight: 400;
+}
+
+.msd-header-stats-box {
+    display: flex;
+    gap: 30px;
+    width: 40%;
+    justify-content: flex-end;
+}
+
+.msd-stat-card {
+    flex: 1;
+    max-width: 400px;
+    aspect-ratio: 2 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px 30px;
+    border: 2px solid #D9D9D9;
+    border-radius: 20px;
+    background: #FFF;
+}
+
+.msd-stat-card-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.msd-stat-label {
+    font-size: 14px;
+    color: #2F4156;
+}
+
+.msd-stat-value {
+    font-size: 32px;
+    font-weight: 700;
+    color: #2F4156;
+}
+
+.msd-lecture-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #EDE7E3;
+    border: 1px solid #D9D9D9;
+    border-radius: 20px;
+
+    padding: 20px 25px;
+}
+
+.msd-lecture-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #2F4156;
+}
+
+.msd-lecture-category {
+    background: #567C8D;
+    color: #FFF;
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.msd-table-header {
+    display: grid;
+    grid-template-columns: 120px 1fr 150px 200px 120px;
+    padding: 0 30px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #2F4156;
+}
+
+.msd-student-row {
+    display: grid;
+    grid-template-columns: 120px 1fr 150px 200px 120px;
+    align-items: center;
+    padding: 22px 30px;
+    background: #FFF;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    border-bottom: 1px solid #D9D9D9;
+}
+
+.msd-student-row:last-child {
+    border-bottom: none;
+}
+
+.msd-student-list {
+    border: 1px solid #D9D9D9;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #F5EFEB;
+}
+
+.col {
+    display: flex;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(47, 65, 86, 0.8);
+}
+
+.col.progress {
+    gap: 10px;
+}
+
+.msd-progress-bar {
+    width: 120px;
+    height: 10px;
+    background: #D9D9D9;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.msd-progress-fill {
+    height: 100%;
+    background: #2F4156;
+}
+
+.msd-progress-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #2F4156;
+}
+
+.col.status {
+    justify-content: center;
+    min-width: 90px;
+}
+
+.msd-student-status-box {
+    padding: 5px 15px;
+    border-radius: 20px;
+    background: #C8D9E6;
+}
+
+.msd-student-status {
+    font-size: 14px;
+    color: #2F4156;
+}
+
+.msd-student-status-box.completed {
+    background: #2F4156;
+}
+
+.msd-student-status-box.completed .msd-student-status {
+    color: #FFF;
+}
