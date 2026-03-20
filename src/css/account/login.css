@@ -27,7 +27,8 @@
     flex-direction: column;
 }
 
-.l-login-main>form>input {
+#su-login-id,
+#su-login-pwd {
     width: 558px;
     border-radius: 10px;
     border: 1px solid #2F4156;
@@ -55,7 +56,7 @@
 }
 
 .l-login-btn {
-    margin-top: 78.8px;
+    margin-top: 58.8px;
     background: #567C8D;
     border: 0;
     color: #FFF;
@@ -80,4 +81,122 @@
     line-height: 36px;
     margin-top: 11px;
     /* 150% */
+}
+
+.su-login-check-ct {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    color: #2F4156;
+}
+
+#l-signup-auto {
+    accent-color: #2F4156;
+}
+
+@media screen and (max-width: 1439px) {
+    .l-login-main {
+        width: 512px;
+        height: 548px;
+        padding: 48.8px 32.8px 0px 32.8px;
+    }
+
+    #su-login-id,
+    #su-login-pwd {
+        width: 446.4px;
+
+        height: 51.3px;
+        padding: 12.8px 16px;
+        margin-top: 11.1px;
+        margin-bottom: 17.5px;
+        font-size: 16px;
+    }
+
+    .l-login-btn {
+        margin-top: 25px;
+    }
+
+    .l-login-btn,
+    .l-signup-btn {
+        width: 446.4px;
+        height: 57.6px;
+        font-size: 20px;
+    }
+
+    .l-login-main>h2 {
+        font-size: 40px;
+        line-height: 72px;
+        margin: 0 0 30px 0;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .l-login-main {
+        width: 379.3px;
+        height: 405.9px;
+        padding: 36.1px 24.3px 0 24.3px;
+    }
+
+    #su-login-id,
+    #su-login-pwd {
+        width: 330.7px;
+        height: 38px;
+        padding: 9.5px 11.9px;
+        margin-top: 8.2px;
+        margin-bottom: 13px;
+        font-size: 11.9px;
+        border-radius: 7px;
+    }
+
+    .l-login-btn {
+        margin-top: 13.3px;
+    }
+
+    .l-login-btn,
+    .l-signup-btn {
+        width: 330.7px;
+        height: 42.7px;
+        font-size: 14.8px;
+        border-radius: 7px;
+    }
+
+    .l-login-main>h2 {
+        font-size: 29.6px;
+        line-height: 53.3px;
+        margin: 0 0 22.2px 0;
+    }
+
+    .l-login-main label {
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 479px) {
+    .l-login-main {
+        margin: 50px auto 100px auto;
+        width: 95%;
+        padding: 36.1px 20px 0 20px;
+        border: 0;
+        height: 600px;
+    }
+
+    #su-login-id,
+    #su-login-pwd {
+        width: 100%;
+
+    }
+
+    .l-login-main>h2 {
+        margin: 0 0 50px 0;
+    }
+
+    .l-login-btn {
+        margin-top: 50px;
+    }
+
+    .l-login-btn,
+    .l-signup-btn {
+        width: 100%;
+
+    }
 }

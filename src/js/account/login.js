@@ -1,5 +1,6 @@
 const $ = (selector) => document.querySelector(selector)
 
+//storage저장
 const user = {
     setLocalStorage(key, value) {
         localStorage.setItem(key, JSON.stringify(value));
@@ -13,12 +14,23 @@ const myInfo = {
     setSessionStorage(key, value) {
         sessionStorage.setItem(key, JSON.stringify(value));
     },
-    getSessionStorage(key) {
-        return JSON.parse(sessionStorage.getItem(key))
+    setLocalStorage(key, value) {
+        localStorage.setItem(key, JSON.stringify(value));
+    },
+
+}
+
+const myInfoGet = {
+    getStorage() {
+        if (localStorage.getItem('myInfo')) {
+            return JSON.parse(localStorage.getItem('myInfo'));
+        } else {
+            return JSON.parse(sessionStorage.getItem('myInfo'));
+        }
     }
 }
 
-
+//모달
 const activeModal = ((clickE, message) => {
     document.querySelector('.active-modal').innerHTML = `
             <div class="modal">
@@ -97,6 +109,7 @@ function closeModal(modal) {
 
 // user.setLocalStorage('userList', userList);
 
+//로그인 함수
 $('.l-login-main>form').addEventListener('submit', (e) => {
     e.preventDefault();
     const userInfo = user.getLocalStorage('userList').find(u => { return u.userId === $("#su-login-id").value });
@@ -104,7 +117,7 @@ $('.l-login-main>form').addEventListener('submit', (e) => {
         activeModal(() => { closeModal($('.modal')); $('#su-login-id').focus(); }, '아이디와 비밀번호를 입력해주세요.');
     } else if (userInfo) {
         if (userInfo.password === $('#su-login-pwd').value) {
-            myInfo.setSessionStorage('myInfo', userInfo);
+            $('#l-signup-auto').checked ? myInfo.setLocalStorage('myInfo', userInfo) : myInfo.setSessionStorage('myInfo', userInfo);
             activeModal(() => movePage('https://www.naver.com'), '로그인에 성공하였습니다.');
         } else {
             activeModal(() => { closeModal($('.modal')); $('#su-login-id').focus(); }, '아이디와 비밀번호가 일치하지 않습니다.');
