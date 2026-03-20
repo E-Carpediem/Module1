@@ -130,10 +130,21 @@ function SignUp() {
 
     //아이디 중복 확인
     $('.su-same-check-btn').addEventListener('click', () => {
-        if (this.users.find(u => { return u.userId === $('#su-user-id').value })) {
+
+        if (!(this.users === null) && $('#su-user-id').value.trim()) {
+            if (this.users.find(u => { return u.userId === $('#su-user-id').value })) {
+                removeBlue('#su-user-id');
+                addRed('#su-user-id');
+                $(`#su-user-id-p`).innerText = '이미 존재하는 아이디입니다.';
+            } else {
+                removeRed('#su-user-id');
+                addBlue('#su-user-id');
+                $(`#su-user-id-p`).innerText = '사용 가능한 아이디입니다.';
+            }
+        } else if (!$('#su-user-id').value.trim()) {
             removeBlue('#su-user-id');
             addRed('#su-user-id');
-            $(`#su-user-id-p`).innerText = '이미 존재하는 아이디입니다.';
+            $(`#su-user-id-p`).innerText = '값을 입력해주세요.';
         } else {
             removeRed('#su-user-id');
             addBlue('#su-user-id');
