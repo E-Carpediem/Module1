@@ -129,6 +129,9 @@ function SignUp() {
     })
 
     //아이디 중복 확인
+
+    console.log($('.su-same-check-btn'));
+    console.log('asdsdffff');
     $('.su-same-check-btn').addEventListener('click', () => {
 
         if (!(this.users === null) && $('#su-user-id').value.trim()) {
