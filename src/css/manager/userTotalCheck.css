@@ -21,11 +21,14 @@
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    border: 0px solid #2F4156;
-    border-bottom-width: 4px;
     width: 50px;
     height: 50px;
     text-align: center;
+}
+
+.tm-main-category > p:first-child {
+    border: 0px solid #2F4156;
+    border-bottom-width: 4px;
 }
 
 .tm-main-category>p:nth-child(2) {

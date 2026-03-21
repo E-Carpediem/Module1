@@ -27,7 +27,7 @@
     text-align: center;
 }
 
-.tml-main-category>p:nth-child(2) {
+.tml-main-category>p:nth-child(3) {
     border: 0px solid #2F4156;
     border-bottom-width: 4px;
 }
