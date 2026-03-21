@@ -80,6 +80,42 @@ function handleSelectedItem(item, isChecked) {
     updateSummary();
 }
 
+// 모달
+function openConfirmModal(message, onConfirm) {
+    const modalHTML = `
+        <div class="modal">
+            <div class="modal-container">
+                <div class="modal-top">${message}</div>
+                <div class="modal-bottom">
+                    <div class="modal-box modal-close">취소</div>
+                    <div class="modal-box modal-check">확인</div>
+                </div>
+            </div>
+        </div>
+    `;
+    const container = document.querySelector('.active-modal');
+    container.innerHTML = modalHTML;
+
+    const $modal = container.querySelector('.modal');
+    $modal.style.display = 'flex';
+
+    const $closeBtn = $modal.querySelector('.modal-close');
+    const $checkBtn = $modal.querySelector('.modal-check');
+
+    $closeBtn.addEventListener('click', () => closeModal($modal));
+    $modal.addEventListener('click', e => { if (e.target === $modal) closeModal($modal); });
+
+    $checkBtn.addEventListener('click', () => {
+        onConfirm();
+        closeModal($modal);
+    });
+}
+
+function closeModal(modal) {
+    modal.style.display = 'none';
+    document.querySelector('.active-modal').innerHTML = '';
+}
+
 function bindItemEvents(item) {
     const check = item.querySelector('.sc-cart-check');
     const moveBtn = item.querySelector('.sc-cart-btn.move'); // 이동 버튼 선택
@@ -147,23 +183,26 @@ function renderCart() {
     updateSummary();
 }
 
-// 테스트 데이터 초기화
-if (!localStorage.getItem('cartList')) {
-    const testData = [];
-    for (let i = 1; i <= 10; i++) {
-        testData.push({
-            userId: 'student01',
-            lecturerId: 'lecturer' + i,
-            contentId: 'content' + i,
-            contentTitle: '강의 제목 ' + i,
-            contentImg: '/src/assets/img/test.jpg',
-            contentPrice: 10000 * i,
-            userName: '강사명 ' + i,
-            contentTime: `${i}시간 ${i * 5}분`,
-            selected: false
-        });
+// 테스트 데이터
+function initTestData() {
+    const cartList = getCartList();
+    if (!cartList || cartList.length === 0) {
+        const testData = [];
+        for (let i = 1; i <= 10; i++) {
+            testData.push({
+                userId: 'student01',
+                lecturerId: 'lecturer' + i,
+                contentId: 'content' + i,
+                contentTitle: '강의 제목 ' + i,
+                contentImg: '/src/assets/img/test.jpg',
+                contentPrice: 10000 * i,
+                userName: '강사명 ' + i,
+                contentTime: `${i}시간 ${i * 5}분`,
+                selected: false
+            });
+        }
+        setCartList(testData);
     }
-    setCartList(testData);
 }
 
 // 버튼 이벤트
@@ -174,27 +213,46 @@ $selectAllBtn.addEventListener('click', () => {
 });
 
 $deleteBtn.addEventListener('click', () => {
-    let cartList = getCartList();
     const selectedItems = $$('.sc-cart-item.active');
-    selectedItems.forEach(item => {
-        const id = item.dataset.id;
-        item.remove();
-        $selectedContainer.querySelector(`[data-id="block-${id}"]`)?.remove();
-        cartList = cartList.filter(i => i.contentId !== id);
+    if (selectedItems.length === 0) return;
+
+    openConfirmModal('선택된 강의를 삭제하시겠습니까?<br>삭제 후에는 되돌릴 수 없습니다.', () => {
+        let cartList = getCartList();
+        selectedItems.forEach(item => {
+            const id = item.dataset.id;
+            item.remove();
+            $selectedContainer.querySelector(`[data-id="block-${id}"]`)?.remove();
+            cartList = cartList.filter(i => i.contentId !== id);
+        });
+        setCartList(cartList);
+        updateTotalCount();
+        updateSummary();
     });
-    setCartList(cartList);
-    updateTotalCount();
-    updateSummary();
 });
 
 $deleteAllBtn.addEventListener('click', () => {
-    $cartList.innerHTML = '';
-    $selectedContainer.innerHTML = '';
-    setCartList([]);
-    updateTotalCount();
-    updateSummary();
+    if ($cartList.children.length === 0) return;
+
+    openConfirmModal('장바구니를 전체 삭제하시겠습니까?<br>삭제 후에는 되돌릴 수 없습니다.', () => {
+        $cartList.innerHTML = '';
+        $selectedContainer.innerHTML = '';
+        setCartList([]);
+        updateTotalCount();
+        updateSummary();
+    });
 });
 
+const $applyBtn = $('.sc-cart-btn.apply');
+$applyBtn.addEventListener('click', () => {
+    const url = $applyBtn.getAttribute('data-url');
+    const message = $applyBtn.getAttribute('data-message');
+
+    openConfirmModal(message, () => {
+        window.location.href = url;
+    });
+});
+
+initTestData();     //로컬 스토리지 테스트용 코드
 renderCart();
 
 // 다른 페이지에서 장바구니가 바뀌면 자동 업데이트
