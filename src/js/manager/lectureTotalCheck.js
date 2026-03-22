@@ -1,10 +1,9 @@
 const userListData = JSON.parse(localStorage.getItem('userList'));
 const $totalLecture = document.querySelector(".tml-content-top-ct");
 
-const arrayLecture = userListData.filter((sub) => sub.role === "lecture");
-console.log(arrayLecture);
-const lectureArraySub = userListData.filter((sub) => sub.subscriptionStatus === true);
-const lectureArrayUnSub = userListData.filter((sub) => sub.subscriptionStatus === false);
+const fileterLecture = userListData.filter((sub) => sub.role === "lecture");
+const lecturefileterSub = userListData.filter((sub) => sub.membershipStatus === true);
+const lecturefileterUnSub = userListData.filter((sub) => sub.membershipStatus === false);
 
 function lectureTotalManagement(arrayList) {
     document.querySelectorAll('.tml-content').forEach(el => el.remove());
@@ -32,23 +31,42 @@ function lectureTotalManagement(arrayList) {
 
         const $userRoleColor = document.querySelector('.tml-content >p:nth-child(4)');
         const $userMembershipColor = document.querySelector('.tml-content >p:nth-child(9)');
+        const $userApproveColor = document.querySelector('.tml-content >p:nth-child(10)');
 
         arrayList[i].role === "student" ? $userRoleColor.className += 'tml-content-role-student' : $userRoleColor.className += 'tml-content-role-lecture';
         arrayList[i].role === "student"
             ? (arrayList[i].subscriptionStatus === true ? $userMembershipColor.className += 'tml-content-memebership-student' : $userMembershipColor.className += 'tml-content-memebership-lecture')
             : (arrayList[i].membershipStatus === true ? $userMembershipColor.className += 'tml-content-memebership-student' : $userMembershipColor.className += 'tml-content-memebership-lecture');
-    };
+        arrayList[i].approveState === "승인" ? $userApproveColor.className += 'tml-content-approve' : $userApproveColor.className += 'tml-content-unapprove';
+        };
 }
 
-lectureTotalManagement(arrayLecture);
+lectureTotalManagement(fileterLecture);
 
-const $lectureArraySub = document.querySelector('.m-fileter>p:nth-of-type(1)');
-const $lectureArrayUnSub = document.querySelector('.m-fileter>p:nth-of-type(2)');
+const $lecturefileterSub = document.querySelector('.m-fileter>p:nth-of-type(1)');
+const $lecturefileterUnSub = document.querySelector('.m-fileter>p:nth-of-type(2)');
+const $fileterSignDate = document.querySelector('.m-array>p:nth-of-type(1)');
+const $fileterSort = document.querySelector('.m-array>p:nth-of-type(2)');
 
-$lectureArraySub.addEventListener('click', () => {
-    lectureTotalManagement(lectureArraySub);
+
+$lecturefileterSub.addEventListener('click', () => {
+    lectureTotalManagement(lecturefileterSub);
 })
 
-$lectureArrayUnSub.addEventListener('click', () => {
-    lectureTotalManagement(lectureArrayUnSub);
+$lecturefileterUnSub.addEventListener('click', () => {
+    lectureTotalManagement(lecturefileterUnSub);
 })
+
+$fileterSignDate.addEventListener('click', () => {
+    const fileterSignDate = [...fileterLecture].sort((a, b) =>
+        b.signDate.localeCompare(a.signDate)
+    );
+    lectureTotalManagement(fileterSignDate);
+});
+
+$fileterSort.addEventListener('click', () => {
+    const fileterSort = [...fileterLecture].sort((a, b) =>
+        a.userName.localeCompare(b.userName)
+    );
+    lectureTotalManagement(fileterSort);
+});

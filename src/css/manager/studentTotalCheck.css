@@ -102,6 +102,9 @@
     flex-direction: column;
 }
 
+.m-fileter {
+    height : 70px;
+}
 .tms-content-top-ct {
     display: flex;
     align-items: center;

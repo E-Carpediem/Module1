@@ -1,9 +1,9 @@
 const userListData = JSON.parse(localStorage.getItem('userList'));
 const $totalStudent = document.querySelector(".tms-content-top-ct");
 
-const arrayStudent = userListData.filter((sub) => sub.role === "student");
-const studentArraySub = userListData.filter((sub) => sub.subscriptionStatus === true);
-const studentArrayUnSub = userListData.filter((sub) => sub.subscriptionStatus === false);
+const fileterStudent = userListData.filter((sub) => sub.role === "student");
+const studentFileterSub = userListData.filter((sub) => sub.subscriptionStatus === true);
+const studentFileterUnSub = userListData.filter((sub) => sub.subscriptionStatus === false);
 
 function studentTotalManagement(arrayList) {
     document.querySelectorAll('.tms-content').forEach(el => el.remove());
@@ -38,14 +38,31 @@ function studentTotalManagement(arrayList) {
 
 }
 
-studentTotalManagement(arrayStudent);
-const $studentArraySub = document.querySelector('.m-fileter>p:nth-of-type(1)');
-const $studentArrayUnSub = document.querySelector('.m-fileter>p:nth-of-type(2)');
+studentTotalManagement(fileterStudent);
+const $studentFileterSub = document.querySelector('.m-fileter>p:nth-of-type(1)');
+const $studentFileterUnSub = document.querySelector('.m-fileter>p:nth-of-type(2)');
+const $ArraySignDate = document.querySelector('.m-array>p:nth-of-type(1)');
+const $ArraySort = document.querySelector('.m-array>p:nth-of-type(2)');
 
-$studentArraySub.addEventListener('click', () => {
-    studentTotalManagement(studentArraySub);
+
+$studentFileterSub.addEventListener('click', () => {
+    studentTotalManagement(studentFileterSub);
 })
 
-$studentArrayUnSub.addEventListener('click', () => {
-    studentTotalManagement(studentArrayUnSub);
+$studentFileterUnSub.addEventListener('click', () => {
+    studentTotalManagement(studentFileterUnSub);
 })
+
+$ArraySignDate.addEventListener('click', () => {
+    const ArraySignDate = [...fileterStudent].sort((a, b) =>
+        b.signDate.localeCompare(a.signDate)
+    );
+    studentTotalManagement(ArraySignDate);
+});
+
+$ArraySort.addEventListener('click', () => {
+    const ArraySort = [...fileterStudent].sort((a, b) =>
+        a.userName.localeCompare(b.userName)
+    );
+    studentTotalManagement(ArraySort);
+});

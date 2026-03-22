@@ -109,6 +109,7 @@ const arraySub = userList.filter((sub) => sub.subscriptionStatus === true);
 const arrayUnSub = userList.filter((sub) => sub.subscriptionStatus === false);
 const arrayMembership = userList.filter((sub) => sub.membershipStatus === true);
 const arrayUnMembership = userList.filter((sub) => sub.membershipStatus === false);
+const arraySignDate = userList.filter((sub) => sub.membershipStatus === false);
 
 
 function userTotalManagement(arrayList) {
@@ -153,6 +154,8 @@ const $ArraySub = document.querySelector('.m-fileter>p:nth-of-type(1)');
 const $ArrayMembership = document.querySelector('.m-fileter>p:nth-of-type(2)');
 const $ArrayUnSub = document.querySelector('.m-fileter>p:nth-of-type(3)');
 const $ArrayUnMembership = document.querySelector('.m-fileter>p:nth-of-type(4)');
+const $ArraySignDate = document.querySelector('.m-array>p:nth-of-type(1)');
+const $ArraySort = document.querySelector('.m-array>p:nth-of-type(2)');
 
 $ArraySub.addEventListener('click', () => {
     userTotalManagement(arraySub);
@@ -169,3 +172,17 @@ $ArrayMembership.addEventListener('click', () => {
 $ArrayUnMembership.addEventListener('click', () => {
     userTotalManagement(arrayUnMembership);
 })
+
+$ArraySignDate.addEventListener('click', () => {
+    const ArraySignDate = [...userListData].sort((a, b) =>
+        b.signDate.localeCompare(a.signDate)
+    );
+    userTotalManagement(ArraySignDate);
+});
+
+$ArraySort.addEventListener('click', () => {
+    const ArraySort = [...userListData].sort((a, b) =>
+        a.userName.localeCompare(b.userName, 'ko')
+    );
+    userTotalManagement(ArraySort);
+});
