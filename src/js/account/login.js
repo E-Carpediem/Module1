@@ -118,7 +118,7 @@ $('.l-login-main>form').addEventListener('submit', (e) => {
     } else if (userInfo) {
         if (userInfo.password === $('#su-login-pwd').value) {
             $('#l-signup-auto').checked ? myInfo.setLocalStorage('myInfo', userInfo) : myInfo.setSessionStorage('myInfo', userInfo);
-            activeModal(() => movePage('https://www.naver.com'), '로그인에 성공하였습니다.');
+            activeModal(() => movePage('../../student/contentTotal/contentTotal.html'), '로그인에 성공하였습니다.');
         } else {
             activeModal(() => { closeModal($('.modal')); $('#su-login-id').focus(); }, '아이디와 비밀번호가 일치하지 않습니다.');
         }
