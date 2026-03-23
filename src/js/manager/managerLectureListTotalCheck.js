@@ -1,10 +1,21 @@
-// localStorage.setItem('contentsList', JSON.stringify(contentsList));
 const contentsListData = JSON.parse(localStorage.getItem('contentsList'));
 
-const $totalContents = document.querySelector(".tc-content-top-ct");
+const $totalContents = document.querySelector(".tmm-lector-content-top-ct");
+const $lectureInf = document.querySelector(".tmm-lecture-inf");
 
 function userTotalManagement(arrayList) {
-    document.querySelectorAll('.tc-content').forEach(el => el.remove());
+    $totalContents.insertAdjacentHTML('afterend',
+        `<div class="tmm-lecture-inf-content">
+            <p> 승인 </p>
+            <p> 강사정보 </p>
+            <p> 강사명 : ${arrayList[6].instructorName} </p>
+            <p> 가입 일자 : 2026.03.14 </p>
+            <p> 전화번호 : 010-1234-5678 </p>
+            <p> 이메일 : honggd@example.com </p>
+        </div>`)
+    
+
+    document.querySelectorAll('.tmm-lector-content').forEach(el => el.remove());
     const pageMaxArray = arrayList.length < 10 ? arrayList.length : 10;
     // 페이지네이션 관련 코드입니다. 추후 추가될 예정입니다.
 
@@ -12,11 +23,10 @@ function userTotalManagement(arrayList) {
     // const usPaginationCurrentPage = 1;
     for (let i = pageMaxArray - 1; i >= 0; i--) {
         $totalContents.insertAdjacentHTML('afterend',
-            `<div class="tc-content">
+            `<div class="tmm-lector-content">
         <p> ${i + 1} </p>
         <p> ${arrayList[i].contentId} </p>
         <p> ${arrayList[i].contentTitle} </p>
-        <p> ${arrayList[i].instructorName}</p>
         <p> ${arrayList[i].studentNumber}명 </p>
         <p> ${arrayList[i].lessonsNumber}개 </p>
         <p> ${arrayList[i].registerDate} </p>

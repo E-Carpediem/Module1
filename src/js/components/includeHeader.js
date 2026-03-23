@@ -15,12 +15,7 @@ fetch("/components/header.html")
                 :
                 $headerActive.style.display = "none";
         });
-
-        const headerTestData = {
-            id: 1
-        }
-
-        localStorage.setItem('myInfo', JSON.stringify(headerTestData));
+;
         const headerIdtest = JSON.parse(localStorage.getItem('myInfo'));
 
         function headerTTest() {
