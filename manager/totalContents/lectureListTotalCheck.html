@@ -25,14 +25,24 @@
                     <input type="text" placeholder="제목 또는 담당 강사명으로 검색...">
                 </div>
 
-                <button class="tc-search-array-btn">
+                <button class="tc-search-array-btn manager-array-common">
                     <img src="/src/assets/img/manager-array.svg">
                     정렬
+                    <div class="m-array">
+                        <p> 제목순</p>
+                        <div></div>
+                        <p> 강사명</p>
+                    </div>
                 </button>
 
-                <button class="tc-search-filter-btn">
+                <button class="tc-search-filter-btn manager-fileter-common">
                     <img src="/src/assets/img/manager-filter.svg">
                     필터
+                    <div class="m-fileter">
+                        <p> 등록중</p>
+                        <div></div>
+                        <p> 미등록</p>
+                    </div>
                 </button>
             </article>
 
@@ -47,116 +57,6 @@
                     <p> 게시 일자 </p>
                 </section>
 
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
-                <div class="tc-content">
-                    <p> 1 </p>
-                    <p> 12345678 </p>
-                    <p> AI 영상 기획, 편집까지 완성하는 </p>
-                    <p> 홍길동 </p>
-                    <p> 30명 </p>
-                    <p> 20개 </p>
-                    <p> 2026.03.14 </p>
-                    <p> 삭제하기 </p>
-                </div>
-
                 <section class="tc-bottom-number">
                     <p> 1 </p>
                     <p> 2 </p>
@@ -168,8 +68,14 @@
         </main>
     </div>
 
+    <div class="active-modal">
+        
+    </div>
+
     <script src="/src/js/components/includeNav.js"></script>
     <script src="/src/js/components/includeHeader.js"></script>
+    <script src="/src/js/manager/userManagement.js"></script>
+    <script src="/src/js/manager/lectureListTotalCheck.js"></script>
 </body>
 
 </html>
