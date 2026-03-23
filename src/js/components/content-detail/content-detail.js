@@ -23,6 +23,9 @@ function escapeHTML(value) {
 }
 
 // local storage에서 강의 리스트 가져오는 함수
+function setLectureList(lectureList) {
+    store.setLocalStorage("lectureList", lectureList);
+}
 function getLectureList() {
     return JSON.parse(localStorage.getItem("lectureList")) || [];
 }
@@ -32,6 +35,7 @@ function renderLectureData() {
     const contentId = params.get("contentId");
     const lectureList = getLectureList();
     const lectureData = lectureList.find(item => item.contentId === contentId);
+    console.log(lectureData.contentId);
 
     function createAfter(contentAfter) {
 
@@ -152,6 +156,79 @@ function renderLectureData() {
     $("#cd-nav-community").addEventListener("click", () => {
         window.location.href = `/community/index.html?contentId=${encodeURIComponent(lectureData.contentId)}`;
     });
+
+    // 모달 닫기 함수
+function closeModal() {
+    const activeModal = $(".active-modal");
+    if (activeModal) activeModal.innerHTML = "";
+}
+
+// 투버튼 모달 열기
+function openTwoButtonModal(message, onConfirm) {
+    const activeModal = $(".active-modal");
+
+    activeModal.innerHTML = `
+        <div class="modal">
+            <div class="modal-container">
+                <div class="modal-top">${message}</div>
+                <div class="modal-bottom">
+                    <div class="modal-box modal-close">취소</div>
+                    <div class="modal-box modal-check">확인</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const modal = $(".modal", activeModal);
+    const closeBtn = $(".modal-close", modal);
+    const checkBtn = $(".modal-check", modal);
+    modal.style.display = "flex";
+
+    closeBtn.addEventListener("click", closeModal);
+
+    checkBtn.addEventListener("click", () => {
+        if (onConfirm) onConfirm();
+        closeModal();
+    });
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
+
+// 수정 버튼 이벤트
+function handleUpdate(lectureData) {
+    openTwoButtonModal(
+        "수정하시겠습니까?<br>확인 버튼을 누르면 강의 수정 페이지로 이동합니다.",
+        () => {
+            window.location.href = `/lecturer/lecture-update.html?contentId=${lectureData.contentId}`;
+        }
+    );
+}
+
+// 삭제 버튼 이벤트
+function handleDelete(lectureData) {
+    openTwoButtonModal(
+        "삭제하시겠습니까?<br>삭제 후엔 되돌릴 수 없습니다.",
+        () => {
+            const lectureList = getLectureList();
+            
+            const index = lectureList.findIndex(
+                item => item.contentId === lectureData.contentId
+            );
+            lectureList.splice(index, 1);
+
+            setLectureList(lectureList);
+            window.location.href = "/lecturer/index.html";
+        }
+    );
+}
+
+// 수정 / 삭제 버튼 이벤트
+    $("#cd-btn-color1").addEventListener("click", () => handleUpdate(lectureData));
+    $("#cd-btn-color2").addEventListener("click", () => handleDelete(lectureData));
 }
 
 renderLectureData();
