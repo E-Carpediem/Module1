@@ -86,7 +86,7 @@ fetch("/components/nav.html")
 
         // 로컬스토리지 테스트 데이터 삭제 예정
         const localStorageTest = {
-            role: "student"
+            role: "manager"
         }
         localStorage.setItem('userrole', JSON.stringify(localStorageTest));
         const test = localStorage.getItem('userrole');
