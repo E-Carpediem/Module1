@@ -94,6 +94,7 @@ function renderLectureData() {
                 <article id="cd-category">${escapeHTML(lectureData.category)}</article>
 
                 <article id="cd-after-container">
+                    <section class="cd-content-index" id="cd-content-after">수강 후에는...</section>
                     ${createAfter(lectureData.contentAfter)}
                 </article>
 
@@ -149,7 +150,7 @@ function renderLectureData() {
 
     // 미니 nav 에서 커뮤니티 클릭 시 커뮤니티 창으로 이동
     $("#cd-nav-community").addEventListener("click", () => {
-        window.location.href = `/components/community/comunity.html?contentId=${encodeURIComponent(lectureData.contentId)}`;
+        window.location.href = `/community/index.html?contentId=${encodeURIComponent(lectureData.contentId)}`;
     });
 }
 
