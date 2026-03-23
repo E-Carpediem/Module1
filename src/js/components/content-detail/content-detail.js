@@ -12,6 +12,21 @@ const store = {
     }
 };
 
+// 현재 로그인 정보 불러오는 함수
+const myInfoGet = {
+    getStorage() {
+        if (localStorage.getItem('myInfo')) {
+            return JSON.parse(localStorage.getItem('myInfo'));
+        } else {
+            return JSON.parse(sessionStorage.getItem('myInfo'));
+        }
+    }
+}
+
+const getUserList = store.getLocalStorage('userList');
+
+const myInfo = myInfoGet.getStorage();//정보 불러오기
+
 // 사용자 입력값에서 HTML 미적용
 function escapeHTML(value) {
     return String(value ?? "")
@@ -34,8 +49,7 @@ function renderLectureData() {
     const params = new URLSearchParams(window.location.search);
     const contentId = params.get("contentId");
     const lectureList = getLectureList();
-    const lectureData = lectureList.find(item => item.contentId === contentId);
-    console.log(lectureData.contentId);
+    const lectureData = lectureList.find(item => item.contentId === Number(contentId));
 
     function createAfter(contentAfter) {
 
@@ -158,16 +172,16 @@ function renderLectureData() {
     });
 
     // 모달 닫기 함수
-function closeModal() {
-    const activeModal = $(".active-modal");
-    if (activeModal) activeModal.innerHTML = "";
-}
+    function closeModal() {
+        const activeModal = $(".active-modal");
+        if (activeModal) activeModal.innerHTML = "";
+    }
 
-// 투버튼 모달 열기
-function openTwoButtonModal(message, onConfirm) {
-    const activeModal = $(".active-modal");
+    // 투버튼 모달 열기
+    function openTwoButtonModal(message, onConfirm) {
+        const activeModal = $(".active-modal");
 
-    activeModal.innerHTML = `
+        activeModal.innerHTML = `
         <div class="modal">
             <div class="modal-container">
                 <div class="modal-top">${message}</div>
@@ -179,56 +193,167 @@ function openTwoButtonModal(message, onConfirm) {
         </div>
     `;
 
-    const modal = $(".modal", activeModal);
-    const closeBtn = $(".modal-close", modal);
-    const checkBtn = $(".modal-check", modal);
-    modal.style.display = "flex";
+        const modal = $(".modal", activeModal);
+        const closeBtn = $(".modal-close", modal);
+        const checkBtn = $(".modal-check", modal);
+        modal.style.display = "flex";
 
-    closeBtn.addEventListener("click", closeModal);
+        closeBtn.addEventListener("click", closeModal);
 
-    checkBtn.addEventListener("click", () => {
-        if (onConfirm) onConfirm();
-        closeModal();
-    });
-
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
+        checkBtn.addEventListener("click", () => {
+            if (onConfirm) onConfirm();
             closeModal();
-        }
-    });
-}
+        });
 
-// 수정 버튼 이벤트
-function handleUpdate(lectureData) {
-    openTwoButtonModal(
-        "수정하시겠습니까?<br>확인 버튼을 누르면 강의 수정 페이지로 이동합니다.",
-        () => {
-            window.location.href = `/lecturer/lecture-update.html?contentId=${lectureData.contentId}`;
-        }
-    );
-}
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
 
-// 삭제 버튼 이벤트
-function handleDelete(lectureData) {
-    openTwoButtonModal(
-        "삭제하시겠습니까?<br>삭제 후엔 되돌릴 수 없습니다.",
-        () => {
-            const lectureList = getLectureList();
-            
-            const index = lectureList.findIndex(
-                item => item.contentId === lectureData.contentId
-            );
-            lectureList.splice(index, 1);
+    // 수정 버튼 이벤트
+    function handleUpdate(lectureData) {
+        openTwoButtonModal(
+            "수정하시겠습니까?<br>확인 버튼을 누르면 강의 수정 페이지로 이동합니다.",
+            () => {
+                window.location.href = `/lecturer/lecture-update.html?contentId=${lectureData.contentId}`;
+            }
+        );
+    }
 
-            setLectureList(lectureList);
-            window.location.href = "/lecturer/index.html";
-        }
-    );
-}
+    // 삭제 버튼 이벤트
+    function handleDelete(lectureData) {
+        openTwoButtonModal(
+            "삭제하시겠습니까?<br>삭제 후엔 되돌릴 수 없습니다.",
+            () => {
+                const lectureList = getLectureList();
 
-// 수정 / 삭제 버튼 이벤트
+                const index = lectureList.findIndex(
+                    item => item.contentId === lectureData.contentId
+                );
+                lectureList.splice(index, 1);
+
+                setLectureList(lectureList);
+                window.location.href = "/lecturer/index.html";
+            }
+        );
+    }
+
+    // 수정 / 삭제 버튼 이벤트
     $("#cd-btn-color1").addEventListener("click", () => handleUpdate(lectureData));
     $("#cd-btn-color2").addEventListener("click", () => handleDelete(lectureData));
+
 }
 
 renderLectureData();
+
+function student() {
+    const params = new URLSearchParams(window.location.search);
+    const contentId = params.get("contentId");
+    const lectureList = getLectureList();
+    const lectureData = lectureList.find(item => item.contentId === Number(contentId));
+
+    if (myInfo.role === "student") {
+        $('#cd-btn-color1').textContent = "장바구니";
+        $('#cd-btn-color2').textContent = "신청하기";
+
+        // 모달 닫기 함수
+        function closeModal() {
+            const activeModal = $(".active-modal");
+            if (activeModal) activeModal.innerHTML = "";
+        }
+
+        // 투버튼 모달 열기
+        function openTwoButtonModal(message, onConfirm) {
+            const activeModal = $(".active-modal");
+
+            activeModal.innerHTML = `
+        <div class="modal">
+            <div class="modal-container">
+                <div class="modal-top">${message}</div>
+                <div class="modal-bottom">
+                    <div class="modal-box modal-close">취소</div>
+                    <div class="modal-box modal-check">확인</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+            const modal = $(".modal", activeModal);
+            const closeBtn = $(".modal-close", modal);
+            const checkBtn = $(".modal-check", modal);
+            modal.style.display = "flex";
+
+            closeBtn.addEventListener("click", closeModal);
+
+            checkBtn.addEventListener("click", () => {
+                if (onConfirm) onConfirm();
+                closeModal();
+            });
+
+            modal.addEventListener("click", (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+        }
+
+        // 장바구니 담기 함수
+        function handleCart(lectureData) {
+            openTwoButtonModal(
+                "장바구니에 추가하시겠습니까?",
+                () => {
+                    const lectureList = getLectureList();
+                    const content = lectureList.find(
+                        item => item.contentId === lectureData.contentId
+                    );
+
+                    const exists = myInfo.shoppingCart.some(
+                        item => Number(item.contentId) === Number(content.contentId)
+                    );
+
+                    if (exists) {
+                        alert("이미 장바구니에 담긴 강의입니다.");
+                        return;
+                    }
+
+                    myInfo.shoppingCart.push(content);
+                    sessionStorage.setItem("myInfo", JSON.stringify(myInfo));
+                }
+            );
+        }
+
+        // 신청하기 함수
+        function handleApply(lectureData) {
+            openTwoButtonModal(
+                "신청하시겠습니까?",
+                () => {
+                    const lectureList = getLectureList();
+                    const content = lectureList.find(
+                        item => item.contentId === lectureData.contentId
+                    );
+
+                    const exists = myInfo.shoppingCart.some(
+                        item => Number(item.contentId) === Number(content.contentId)
+                    );
+
+                    if (exists) {
+                        alert("이미 신청한 강의입니다.");
+                        return;
+                    }
+
+                    myInfo.shoppingCart.push(content);
+                    sessionStorage.setItem("myInfo", JSON.stringify(myInfo));
+                }
+            );
+        }
+
+
+        $("#cd-btn-color1").addEventListener("click", () => handleCart(lectureData));
+        $("#cd-btn-color2").addEventListener("click", () => handleApply(lectureData));
+    }
+}
+
+student();
+

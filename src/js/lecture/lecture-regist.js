@@ -396,7 +396,7 @@ function getContentId() {
 
     const max = Math.max(...numbers);
 
-    return `${max + 1}`;
+    return max + 1;
 }
 
 // 폼 전체 데이터 수집
@@ -478,7 +478,7 @@ cancelBtn.addEventListener("click", () => {
             form.reset();
             resetThumbnailUI();
             // 강의 등록 취소 후 목록 페이지로 이동
-            window.location.href = "../lectureContentTotal/lectureContentTotal.html";
+            window.location.href = "/lecturer/index.html";
         },
         () => {
             // 취소 모달에서 취소 버튼 클릭 시 모달창 사라지고, 작성 중인 폼 유지
