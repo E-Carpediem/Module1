@@ -12,22 +12,6 @@ const store = {
     }
 };
 
-// 미니 nav 에서 커리큘럼 클릭 시 커리큘럼쪽으로 자동 스크롤
-$('#cd-nav-curry').addEventListener('click', () => {
-    $('#cd-curry-container').scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-    });
-})
-
-// 미니 nav 에서 커뮤니티 클릭 시 커뮤니티 창으로 이동
-$('#cd-nav-community').addEventListener('click', () => {
-    window.location.href = '/components/community/comunity.html';
-});
-
-function getLectureList() {
-    return JSON.parse(localStorage.getItem('lectureList')) || [];
-}
 
 function renderLectureData() {
     const params = new URLSearchParams(window.location.search);
@@ -124,8 +108,26 @@ function renderLectureData() {
                 </article>
             </article>
         `;
+
+    // 미니 nav 에서 커리큘럼 클릭 시 커리큘럼쪽으로 자동 스크롤
+    $('#cd-nav-curry').addEventListener('click', () => {
+        $('#cd-curry-container').scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    })
+
+    // 미니 nav 에서 커뮤니티 클릭 시 커뮤니티 창으로 이동
+    $('#cd-nav-community').addEventListener('click', () => {
+        window.location.href = `/components/community/comunity.html?contentId=${lectureData.contentId}`;
+    });
+
+    function getLectureList() {
+        return JSON.parse(localStorage.getItem('lectureList')) || [];
+    }
 }
 renderLectureData();
+
 
 // card.addEventListener('click', () => {
 //     window.location.href = `/components/contentDetail.html?contentId=${item.contentId}`;
