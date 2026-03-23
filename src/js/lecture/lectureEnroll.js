@@ -362,23 +362,23 @@ function collectCurryData() {
 
 // 강의의 고유 id 값을 순서대로 계산하는 함수
 function getContentId() {
-    const list = store.getLocalStorage("lectureContentList", []);
+    const list = store.getLocalStorage("lectureList", []);
 
-    if (list.length === 0) return "content1";
+    if (list.length === 0) return "1";
 
     const numbers = list.map(item => {
-        return Number(item.contentId.replace("content", ""));
+        return Number(item.contentId);
     });
 
     const max = Math.max(...numbers);
 
-    return `content${max + 1}`;
+    return `${max + 1}`;
 }
 
 // 폼 전체 데이터 수집
 function collectLectureData() {
     return {
-        lecturerId: "lct1",
+        userId: "lct1",
         contentId: getContentId(), // 고유값
         contentImg: thumbnailPreview.getAttribute("src") || "",
         contentTitle: $("#le-content-title").value.trim(),
@@ -390,7 +390,7 @@ function collectLectureData() {
         // 배열로 변환 (줄바꿈 기준)
         contentAfter: $("#le-content-after").value
             .split("\n")
-            .map((item, index) => `${index + 1}. ${item.trim()}`)
+            .map((item, index) => `${item.trim()}`)
             .filter(Boolean),
 
         contentCurry: collectCurryData(),
@@ -431,7 +431,7 @@ form.addEventListener("submit", (e) => {
             saveLectureData();
             form.reset();
             resetThumbnailUI();
-            window.location.href = "../lectureContentTotal/lectureContentTotal.html";
+            window.location.href = "/lecture/main/lectureContentTotal.html";
         },
         () => {
             // 취소 버튼 클릭 시 모달창 사라지고, 작성 중인 폼 유지
