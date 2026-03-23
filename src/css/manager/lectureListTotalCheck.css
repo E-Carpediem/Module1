@@ -39,6 +39,7 @@
     width: 100%;
     align-items: center;
     margin-bottom: 25px;
+    position: relative;
 }
 
 .tc-search-input-ct {
@@ -71,7 +72,7 @@
 
 .tc-search-array-btn,
 .tc-search-filter-btn {
-    width: 10%;
+    width: 80px;
     height: 40px;
     border-radius: 10px;
     border: 1px solid #2F4156;
@@ -81,6 +82,11 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    position: relative;
+    z-index: 5;
+}
+.m-fileter {
+    height : 70px;
 }
 
 .tc-content-ct {
@@ -187,7 +193,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: normal;
-    width : 50px;
+    width: 50px;
     height: 25px;
     line-height: 25px;
     text-align: center;
