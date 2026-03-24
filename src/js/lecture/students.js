@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="ms-lecture-info-box">
                 <div class="ms-lecture-stats">
                     <span>수강생: ${lessonNumber}명</span>
-                    <span>수강 중: 49명</span>
+                    <span>수강 중: ${lessonNumber - 49}명</span>
                     <span>수강 완료: 49명</span>
                 </div>
                 <span class="ms-lecture-category">${lecture.category}</span>
@@ -101,6 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (statValues[0]) statValues[0].textContent = totalStudents;
     if (statValues[1]) {
-        statValues[1].textContent = "50.0 %";
+        statValues[1].textContent = "45.8 %";
     }
 });

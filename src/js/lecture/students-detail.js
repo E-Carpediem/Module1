@@ -1,6 +1,3 @@
-// ==========================
-// 전역 함수 및 선택자
-// ==========================
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
 
@@ -36,9 +33,7 @@ const getAverageProgress = (students) => {
     return Math.round(total / students.length);
 };
 
-// ==========================
-// DOM 렌더링 함수
-// ==========================
+// DOM 렌더링
 const renderStats = (lecture, students) => {
     $(".msd-lecture-title").textContent = lecture.contentTitle;
     $(".msd-lecture-category").textContent = lecture.category;
@@ -78,9 +73,6 @@ const renderStudentList = (students) => {
     });
 };
 
-// ==========================
-// DOMContentLoaded 실행
-// ==========================
 document.addEventListener("DOMContentLoaded", () => {
     const contentId = getContentId();
     if (!contentId) return console.error("contentId가 존재하지 않습니다.");
