@@ -44,6 +44,7 @@ function lectureMainLectures() {
     mainLectures.forEach((lecture) => {
         $lectorMainLecture.insertAdjacentHTML('beforeend',
             `<div class="tmm-lector-lecture">
+                <div class="tmm-lector-backImg"></div>
                 <div class="tmm-lector-category">${lecture.category}</div>
                 <div class="tmm-lector-lecture-coment-ct">
                     <p class="tmm-lector-lecture-title">${lecture.contentTitle}</p>
@@ -51,6 +52,8 @@ function lectureMainLectures() {
                 </div>
             </div>`
         );
+        const lectureImg = document.querySelector('.tmm-lector-backImg');
+        lectureImg.style.backgroundImage = `url${lecture.contentImg}`;
     });
 }
 
