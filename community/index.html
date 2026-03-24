@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CARDI</title>
+    <link rel="icon" href="/src/assets/img/headLogo.png" />
     <link rel="stylesheet" href="../src/css/reset.css">
     <link rel="stylesheet" href="../src/css/components/content-detail.css">
     <link rel="stylesheet" href="../src/css/community/community.css">
@@ -18,12 +19,13 @@
                 <article class="cd-main-content">
                     <article class="cd-main-nav">
                         <p class="cd-nav-title">강의소개</p>
-                        <p class="cd-nav-title">커리큘럼</p>
+                        <p class="cd-nav-curry cd-nav-title">커리큘럼</p>
                         <p class="cd-nav-title">커뮤니티</p>
                     </article>
                     <article class="cd-long-line">
                         <section class="cd-short-line" id="cd-short-line1"></section>
                         <section class="cd-short-line" id="cd-short-line2"></section>
+                        <section class="cd-short-line" id="cd-short-line3"></section>
                     </article>
                     <article id="cd-curry-container">
                         <section class="cd-content-index" id="cd-content-curry">커뮤니티</section>
@@ -51,24 +53,17 @@
                     </article>
                     <article class="cm-button-ct-student">
                         <button class="cd-btn cm-question-btn" id="cd-btn-color1">질문하기</button>
-                        <button class="cd-btn modal-open-two-btn" id="cd-btn-color2"
-                            data-url="/lecture/lectureUpdate/lectureUpdate.html" data-message="
-                    해당 강의를 신청하시겠습니까?">신청하기</button>
+                        <button class="cd-btn cm-student-apply" id="cd-btn-color2">신청하기</button>
                     </article>
                     <article class="cm-button-ct-lecturer cm-hidden-btn">
-                        <button class="cd-btn" id="cd-btn-color1">수강생 조회</button>
+                        <button class="cd-btn cm-lecture-student-info" id="cd-btn-color1">수강생 조회</button>
                         <div>
-                            <button class="cd-btn modal-open-two-btn" id="cd-btn-color3"
-                                data-url="/lecture/lectureUpdate/lectureUpdate.html" data-message="
-                    수정하시겠습니까?<br>
-                    확인 버튼을 누르면 강의 수정 페이지로 이동합니다.">수정하기</button>
-                            <button class="cd-btn modal-open-two-btn" id="cd-btn-color2"
-                                data-url="/lecture/lectureUpdate/lectureUpdate.html">삭제하기</button>
+                            <button class="cd-btn cm-lecture-modify" id="cd-btn-color3">수정하기</button>
+                            <button class="cd-btn cm-lecture-delete" id="cd-btn-color2">삭제하기</button>
                         </div>
                     </article>
                     <article class="cm-button-ct-manager  cm-hidden-btn">
-                        <button class="cd-btn modal-open-two-btn" id="cd-btn-color2"
-                            data-url="/lecture/lectureUpdate/lectureUpdate.html">삭제하기</button>
+                        <button class="cd-btn cm-manager-delete" id="cd-btn-color2">삭제하기</button>
                     </article>
                 </article>
             </article>

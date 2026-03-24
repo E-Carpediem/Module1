@@ -121,7 +121,9 @@ function Question() {
         $('.cmd-user-info-date').innerText = `작성 일시: ${this.currentQuestion.questionDate}`;
         $('.cmd-question-p').innerText = `${this.currentQuestion.questionContent}`;
         if (this.currentQuestion.questionOwnerId === myInfo.userId && !this.currentQuestion.questionState) {
-            $('.cmd-content-title-ct>img').hidden = false;
+            $('.cmd-student-dot-img').hidden = false;
+        } else if (myInfo.role === 'manager') {
+            $('.cmd-student-dot-img-m').hidden = false;
         }
 
     }
@@ -130,7 +132,9 @@ function Question() {
         console.log(this.currentQuestion.answerContent)
         if (this.currentQuestion.answerContent) {
             if (currentCommunity.id === myInfo.id) {
-                $('.cmd-reply-lecture-info-ct>img').hidden = false;
+                $('.cmd-lecture-dot-img').hidden = false;
+            } else if (myInfo.role === 'manager') {
+                $('.cmd-lecture-dot-img-m').hidden = false;
             }
             $('#cmd-student-reply-ct').hidden = false;
             $('#cmd-lecture-reply-ct').hidden = true;
@@ -142,6 +146,7 @@ function Question() {
             $('#cmd-student-reply-ct').hidden = true;
         }
     }
+
     //답변 저장
     const saveAnswer = () => {
         this.communityList[commuIndex].communityTotal[questIndex].answerContent = $('#cmd-textarea').value;
@@ -174,13 +179,15 @@ function Question() {
     const modifyQuestion = () => {
         commu.setLocalStorage('modifyQuestion', this.communityList[commuIndex].communityTotal[questIndex])
         window.location.href = '/community/regist.html';
+        $('.cmd-edit-delete-hover-student').classList.toggle('none');
     }
 
     //질문 삭제
     const deleteQuestion = () => {
         this.communityList[commuIndex].communityTotal.splice(questIndex, 1);
-        console.log(this.communityList);
         commu.setLocalStorage('communityList', this.communityList);
+        $('.cmd-edit-delete-hover-student').classList.toggle('none');
+        history.back();
     }
 
     //답변 수정
@@ -200,6 +207,21 @@ function Question() {
         this.currentQuestion = currentCommunity.communityTotal.find((question) => {
             return question.questionId === Number(questionId);
         })
+        $('.cmd-edit-delete-hover-lecture').classList.toggle('none');
+        commu.setLocalStorage('communityList', this.communityList);
+    }
+    //관리자용 답변 삭제
+    const deleteReplyM = () => {
+        this.communityList[commuIndex].communityTotal[questIndex].answerContent = null;
+        this.communityList[commuIndex].communityTotal[questIndex].questionState = false;
+        currentCommunity = this.communityList[commuIndex];
+        this.currentQuestion = currentCommunity.communityTotal.find((question) => {
+            return question.questionId === Number(questionId);
+        })
+        $('.cmd-reply-lecturer-name').innerText = ``;
+        $('.cmd-reply-content').innerText = `아직 답변이 없습니다.`;
+        $('.cmd-lecture-dot-img-m').hidden = true;
+
         commu.setLocalStorage('communityList', this.communityList);
     }
 
@@ -210,6 +232,15 @@ function Question() {
 
     $('.cmd-lecture-dot-img').addEventListener('click', () => {
         $('.cmd-edit-delete-hover-lecture').classList.toggle('none');
+    })
+
+    //관리자 삭제 토글
+    $('.cmd-student-dot-img-m').addEventListener('click', () => {
+        $('.cmd-edit-delete-hover-student-m').classList.toggle('none');
+    })
+
+    $('.cmd-lecture-dot-img-m').addEventListener('click', () => {
+        $('.cmd-edit-delete-hover-lecture-m').classList.toggle('none');
     })
 
     //질문 삭제, 수정
@@ -223,12 +254,20 @@ function Question() {
 
     //답변 수정, 삭제
     $('.reply-modify').addEventListener('click', () => {
-        activeTwoModal(() => { closeModal($('.modal')); modifyReply(); }, '답변을 수정하시겠습니까?');
+        activeTwoModal(() => { closeModal($('.modal')); modifyReply(); $('.cmd-edit-delete-hover-lecture').classList.toggle('none'); }, '답변을 수정하시겠습니까?');
     })
     $('.reply-delete').addEventListener('click', () => {
         activeTwoModal(() => { closeModal($('.modal')); deleteReply(); }, '답변을 삭제하시겠습니까?');
     })
 
+
+    //관리자 답변 ,질문 삭제
+    $('.reply-delete-m').addEventListener('click', () => {
+        activeTwoModal(() => { closeModal($('.modal')); deleteReplyM(); $('.cmd-edit-delete-hover-lecture-m').classList.toggle('none'); }, '답변을 삭제하시겠습니까?');
+    })
+    $('.question-delete-m').addEventListener('click', () => {
+        activeTwoModal(() => { closeModal($('.modal')); deleteQuestion(); $('.cmd-edit-delete-hover-student-m').classList.toggle('none'); }, '질문을 삭제하시겠습니까?');
+    })
 
     $('.cmd-reply-regits-btn').addEventListener('click', () => {
         if (!$('#cmd-textarea').value.trim()) {

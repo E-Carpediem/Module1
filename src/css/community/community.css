@@ -191,3 +191,11 @@
 .btn-border {
     border: 1px solid #000;
 }
+
+#cd-short-line1 {
+    background-color: transparent;
+}
+
+#cd-short-line3 {
+    background: #567c8d;
+}
