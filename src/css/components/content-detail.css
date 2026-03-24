@@ -50,7 +50,10 @@
     color: #2f4156;
     margin-bottom: 25px;
 }
-#cd-nav-curry:hover, #cd-nav-community:hover, #cd-nav-main {
+
+#cd-nav-curry:hover,
+#cd-nav-community:hover,
+#cd-nav-main {
     cursor: pointer;
 }
 
@@ -72,6 +75,8 @@
 #cd-short-line1 {
     background: #567c8d;
 }
+
+
 
 #cd-content-title {
     margin: 40px auto 25px 30px;

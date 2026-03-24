@@ -177,6 +177,24 @@
 }
 
 
+.cmd-edit-delete-hover-lecture-m,
+.cmd-edit-delete-hover-student-m {
+    border: 1px solid #D9D9D9;
+    background: #FFF;
+    width: 83px;
+    height: 35px;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    left: 56%;
+}
+
+.cmd-edit-delete-hover-lecture-m {
+    left: 61.5%;
+}
+
 
 .none {
     display: none;

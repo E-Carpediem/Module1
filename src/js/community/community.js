@@ -104,10 +104,13 @@ const myInfoGet = {
 
 
 
+
 function Community() {
     this.currentCommunity = [];
     const params = new URLSearchParams(window.location.search);
     const contentId = params.get("contentId");
+    const lectureList = commu.getLocalStorage('lectureList');
+    const lectureData = lectureList.find(item => item.contentId === Number(contentId));
 
     this.init = () => {
         this.currentCommunity = commu.getLocalStorage('communityList').find((commu) => {
@@ -184,6 +187,211 @@ function Community() {
     }
 
 
+    // 모달 닫기 함수
+    function closeModal() {
+        const activeModal = $(".active-modal");
+        if (activeModal) activeModal.innerHTML = "";
+    }
+
+    // 투버튼 모달 열기
+    function openTwoButtonModal(message, onConfirm) {
+        const activeModal = $(".active-modal");
+
+        activeModal.innerHTML = `
+        <div class="modal">
+            <div class="modal-container">
+                <div class="modal-top">${message}</div>
+                <div class="modal-bottom">
+                    <div class="modal-box modal-close">취소</div>
+                    <div class="modal-box modal-check">확인</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+        const modal = $(".modal", activeModal);
+        const closeBtn = $(".modal-close", modal);
+        const checkBtn = $(".modal-check", modal);
+        modal.style.display = "flex";
+
+        closeBtn.addEventListener("click", closeModal);
+
+        checkBtn.addEventListener("click", () => {
+            if (onConfirm) onConfirm();
+            closeModal();
+        });
+
+        modal.addEventListener("click", (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    }
+
+
+    // 신청하기 함수
+    function handleApply(lectureData) {
+        // 등록 날짜
+        const today = new Date().toISOString().split('T')[0];
+        openTwoButtonModal(
+            "신청하시겠습니까?",
+            () => {
+                const lectureList = commu.getLocalStorage('lectureList');
+                const content = lectureList.find(
+                    item => item.contentId === lectureData.contentId
+                );
+
+                const applied = myInfoGet.getStorage().appliedLecture.some(
+                    item => item.contentId === content.contentId
+                );
+
+                if (applied) {
+                    alert("이미 신청한 강의입니다.");
+                    return;
+                }
+
+                // appliedLecture에 들어갈 값
+                const appliedLectureUpdate = {
+                    contentId: content.contentId,
+                    appliedDate: today,
+                    completeContents: 0
+                }
+
+                // 강의를 신청하면 sessionStorage 에 신청한 강의의 appliedLecture 값 추가
+                myInfo.appliedLecture.push(appliedLectureUpdate);
+
+                // sessionStorage 장바구니에 해당 강의가 있으면 장바구니에서 제거
+                const cartIndex = myInfo.shoppingCart.findIndex(
+                    item => item.contentId === content.contentId
+                );
+
+                if (cartIndex !== -1) {
+                    myInfo.shoppingCart.splice(cartIndex, 1);
+                }
+
+                // sessionStorage 에 반영
+                sessionStorage.setItem("myInfo", JSON.stringify(myInfo));
+
+                // localStorage -> userList 에 신청 강의 추가 및 장바구니에 해당 강의가 있으면 삭제
+                if (userIndex !== -1) {
+                    userList[userIndex].appliedLecture.push(appliedLectureUpdate);
+                    const userCartIndex = userList[userIndex].shoppingCart.findIndex(
+                        item => item.contentId === content.contentId
+                    );
+
+                    if (userCartIndex !== -1) {
+                        userList[userIndex].shoppingCart.splice(userCartIndex, 1);
+                    }
+                }
+
+                // localStorage 에 반영
+                localStorage.setItem("userList", JSON.stringify(userList));
+            }
+        );
+    }
+
+
+    // 수정 버튼 이벤트
+    function handleUpdate(lectureData) {
+        openTwoButtonModal(
+            "수정하시겠습니까?<br>확인 버튼을 누르면 강의 수정 페이지로 이동합니다.",
+            () => {
+                window.location.href = `/lecturer/lecture-update.html?contentId=${lectureData.contentId}`;
+            }
+        );
+    }
+
+    // 삭제 버튼 이벤트
+    function handleDelete(lectureData, url) {
+        openTwoButtonModal(
+            "삭제하시겠습니까?<br>삭제 후엔 되돌릴 수 없습니다.",
+            () => {
+                const lectureList = commu.getLocalStorage('lectureList');
+                const userList = commu.getLocalStorage("userList", []);
+
+                // lectureList 에서 contentId가 현재 강의의 contentId와 같은 content의 index 찾기
+                const index = lectureList.findIndex(
+                    item => item.contentId === lectureData.contentId
+                );
+                // 해당 index 부터 1개의 content 삭제 즉, 해당 강의 삭제
+                lectureList.splice(index, 1);
+
+                // 모든 유저를 순회하여, appliedLecture에 해당 강의와 contentid 가 같은 content 도 삭제
+                userList.forEach(user => {
+                    if (Array.isArray(user.appliedLecture)) {
+                        const appliedIndex = user.appliedLecture.findIndex(
+                            item => Number(item.contentId) === contentId
+                        );
+
+                        if (appliedIndex !== -1) {
+                            user.appliedLecture.splice(appliedIndex, 1);
+                        }
+                    }
+
+                    // 장바구니 내에서도 삭제
+                    if (Array.isArray(user.shoppingCart)) {
+                        const cartIndex = user.shoppingCart.findIndex(
+                            item => Number(item.contentId) === contentId
+                        );
+
+                        if (cartIndex !== -1) {
+                            user.shoppingCart.splice(cartIndex, 1);
+                        }
+                    }
+                });
+
+                commu.setLocalStorage('lectureList', lectureList);
+                commu.setLocalStorage("userList", userList);
+
+                const storageKey = sessionStorage.getItem("myInfo");
+                const currentMyInfo = myInfoGet.getStorage();
+
+                if (currentMyInfo) {
+                    if (Array.isArray(currentMyInfo.appliedLecture)) {
+                        const myAppliedIndex = currentMyInfo.appliedLecture.findIndex(
+                            item => Number(item.contentId) === contentId
+                        );
+
+                        if (myAppliedIndex !== -1) {
+                            currentMyInfo.appliedLecture.splice(myAppliedIndex, 1);
+                        }
+                    }
+
+                    if (Array.isArray(currentMyInfo.shoppingCart)) {
+                        const myCartIndex = currentMyInfo.shoppingCart.findIndex(
+                            item => Number(item.contentId) === contentId
+                        );
+
+                        if (myCartIndex !== -1) {
+                            currentMyInfo.shoppingCart.splice(myCartIndex, 1);
+                        }
+                    }
+
+                    if (storageKey === "localStorage") {
+                        localStorage.setItem("myInfo", JSON.stringify(currentMyInfo));
+                    } else {
+                        sessionStorage.setItem("myInfo", JSON.stringify(currentMyInfo));
+                    }
+                }
+
+                window.location.href = url;
+            }
+        );
+    }
+
+
+    //수강생 조회 버튼 이벤트
+    $('.cm-lecture-student-info').addEventListener('click', () => {
+        // window.location.href =
+    })
+
+    // 수정  삭제 버튼 이벤트
+    $(".cm-lecture-modify").addEventListener("click", () => handleUpdate(lectureData));
+    $(".cm-lecture-delete").addEventListener("click", () => handleDelete(lectureData, '/lecturer/index.html'));
+    $(".cm-manager-delete").addEventListener("click", () => handleDelete(lectureData, '/manager/lecture-total.html'));
+
+    //신청하기 버튼 이벤트
+    $('.cm-student-apply').addEventListener('click', () => handleApply(lectureData));
 
     $('.cm-all-reply-btn').addEventListener('click', () => {
         $('.cm-all-reply-btn').classList.add('btn-border');
@@ -245,11 +453,20 @@ function Community() {
 
     $('.cm-question-btn').addEventListener('click', () => {
         window.location.href = '/community/regist.html';
-    })
+    });
 
     $('.cd-nav-title').addEventListener('click', () => {
         window.location.href = `/components/content-detail.html?contentId=${this.currentCommunity.contentId}`;
 
+    });
+
+
+    $('.cd-nav-curry').addEventListener('click', () => {
+        window.location.href = `/components/content-detail.html?contentId=${this.currentCommunity.contentId}`;
+        $("#cd-curry-container").scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
     })
 
 
