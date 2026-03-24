@@ -6,42 +6,20 @@ const store = {
     setLocalStorage(key, value) {
         localStorage.setItem(key, JSON.stringify(value));
     },
-    getLocalStorage(key, fallback = null) {
+    getLocalStorage(key) {
         const data = localStorage.getItem(key);
-        return data ? JSON.parse(data) : fallback;
     }
 };
 
-// myInfo 와 id 값이 동일한 user 를 userList에서 불러와서 저장하는 함수
-function getCurrentUser() {
-    const myInfo =
-        JSON.parse(localStorage.getItem("myInfo")) ||
-        JSON.parse(sessionStorage.getItem("myInfo"));
-
-    if (!myInfo) return null;
-
-    const userList = JSON.parse(localStorage.getItem("userList")) || [];
-
-    const userIndex = userList.findIndex(user => user.id === myInfo.id);
-
-    if (userIndex === -1) return null;
-
-    return {
-        user: userList[userIndex],
-        userIndex,
-        userList
-    };
-}
-console.log(getCurrentUser());
 
 // 사용자 입력값에서 HTML 미적용
 function escapeHTML(value) {
-    return String(value ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#39;");
+    return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
 }
 
 // local storage에서 강의 리스트 가져오는 함수
@@ -52,31 +30,51 @@ function getLectureList() {
     return JSON.parse(localStorage.getItem("lectureList")) || [];
 }
 
+// myInfo 와 id 값이 동일한 user 를 userList에서 불러와서 저장하는 함수
+function getCurrentUser() {
+    const myInfo =
+        JSON.parse(localStorage.getItem("myInfo")) ||
+        JSON.parse(sessionStorage.getItem("myInfo"));
+
+    const userList = JSON.parse(localStorage.getItem("userList")) || [];
+
+    const userIndex = userList.findIndex(user => user.id === myInfo.id);
+
+    return {
+        myInfo,
+        user: userList[userIndex],
+        userIndex,
+        userList
+    };
+}
+console.log(getCurrentUser());
+
+// 해당 강의의 localStorage 값을 받아와서 강의 상세 조회에 반영하는 함수
 function renderLectureData() {
     const params = new URLSearchParams(window.location.search);
     const contentId = params.get("contentId");
     const lectureList = getLectureList();
     const lectureData = lectureList.find(item => item.contentId === Number(contentId));
-
+    
+    if (!lectureData) return null;
+    
     function createAfter(contentAfter) {
-
-        return contentAfter.map((item, index) => {
+        return (contentAfter || []).map((item, index) => {
             return `
-                <article class="cd-content-container" id="cd-after-container${index + 1}">
-                    <section class="cd-number" id="cd-after-number${index + 1}">
-                        ${index + 1}
-                    </section>
-                    <section class="cd-content" id="cd-after-content${index + 1}">
-                        ${escapeHTML(item)}
-                    </section>
+            <article class="cd-content-container" id="cd-after-container${index + 1}">
+            <section class="cd-number" id="cd-after-number${index + 1}">
+            ${index + 1}
+            </section>
+            <section class="cd-content" id="cd-after-content${index + 1}">
+            ${escapeHTML(item)}
+            </section>
                 </article>
             `;
         }).join("");
     }
 
     function createCurry(contentCurry) {
-
-        return contentCurry.map((curry, index) => {
+        return (contentCurry || []).map((curry, index) => {
             const lessonsHTML = Array.isArray(curry.lessons)
                 ? curry.lessons.map((lesson) => {
                     return `<li>${escapeHTML(lesson.lessonsTitle)}</li>`;
@@ -119,7 +117,7 @@ function renderLectureData() {
                 <article id="cd-category">${escapeHTML(lectureData.category)}</article>
 
                 <article id="cd-after-container">
-                    <section class="cd-content-index" id="cd-content-after">수강 후에는...</section>
+                    <section class="cd-content-index" id="cd-content-after">수강 후에는.</section>
                     ${createAfter(lectureData.contentAfter)}
                 </article>
 
@@ -145,27 +143,12 @@ function renderLectureData() {
                     <section id="cd-content-level">난이도: ${escapeHTML(lectureData.contentLevel || "")}</section>
                 </article>
 
-                <button
-                    class="cd-btn modal-open-two-btn"
-                    id="cd-btn-color1"
-                    data-url="/lecture/lectureUpdate/lectureUpdate.html?contentId=${encodeURIComponent(lectureData.contentId)}"
-                    data-message="수정하시겠습니까?<br>확인 버튼을 누르면 강의 수정 페이지로 이동합니다."
-                >
-                    수정하기
-                </button>
-
-                <button
-                    class="cd-btn modal-open-two-btn"
-                    id="cd-btn-color2"
-                    data-url="/lecture/lectureContentTotal/LectureContentTotal.html"
-                >
-                    삭제하기
-                </button>
+                <button class="cd-btn" id="cd-btn-color1"></button>
+                <button class="cd-btn" id="cd-btn-color2"></button>
             </article>
         </article>
     `;
 
-    // 미니 nav 에서 커리큘럼 클릭 시 커리큘럼쪽으로 자동 스크롤
     $("#cd-nav-curry").addEventListener("click", () => {
         $("#cd-curry-container").scrollIntoView({
             behavior: "smooth",
@@ -173,22 +156,22 @@ function renderLectureData() {
         });
     });
 
-    // 미니 nav 에서 커뮤니티 클릭 시 커뮤니티 창으로 이동
     $("#cd-nav-community").addEventListener("click", () => {
         window.location.href = `/community/index.html?contentId=${encodeURIComponent(lectureData.contentId)}`;
     });
 
-    // 모달 닫기 함수
-    function closeModal() {
-        const activeModal = $(".active-modal");
-        if (activeModal) activeModal.innerHTML = "";
-    }
+    return lectureData;
+}
 
-    // 투버튼 모달 열기
-    function openTwoButtonModal(message, onConfirm) {
-        const activeModal = $(".active-modal");
+function closeModal() {
+    const activeModal = $(".active-modal");
+    if (activeModal) activeModal.innerHTML = "";
+}
 
-        activeModal.innerHTML = `
+function openTwoButtonModal(message, onConfirm) {
+    const activeModal = $(".active-modal");
+
+    activeModal.innerHTML = `
         <div class="modal">
             <div class="modal-container">
                 <div class="modal-top">${message}</div>
@@ -200,27 +183,68 @@ function renderLectureData() {
         </div>
     `;
 
-        const modal = $(".modal", activeModal);
-        const closeBtn = $(".modal-close", modal);
-        const checkBtn = $(".modal-check", modal);
-        modal.style.display = "flex";
+    const modal = $(".modal", activeModal);
+    const closeBtn = $(".modal-close", modal);
+    const checkBtn = $(".modal-check", modal);
 
-        closeBtn.addEventListener("click", closeModal);
+    modal.style.display = "flex";
 
-        checkBtn.addEventListener("click", () => {
-            if (onConfirm) onConfirm();
+    closeBtn.addEventListener("click", closeModal);
+
+    checkBtn.addEventListener("click", () => {
+        closeModal();
+        if (onConfirm) onConfirm();
+    });
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
             closeModal();
-        });
+        }
+    });
+}
 
-        modal.addEventListener("click", (e) => {
-            if (e.target === modal) {
-                closeModal();
-            }
-        });
-    }
+function openOneButtonModal(message) {
+    const activeModal = $(".active-modal");
 
-    // 수정 버튼 이벤트
-    function handleUpdate(lectureData) {
+    activeModal.innerHTML = `
+        <div class="modal">
+            <div class="modal-container">
+                <div class="modal-top">${message}</div>
+                <div class="modal-bottom">
+                    <div class="modal-box modal-check">확인</div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    const modal = $(".modal", activeModal);
+    const checkBtn = $(".modal-check", modal);
+
+    modal.style.display = "flex";
+
+    checkBtn.addEventListener("click", () => {
+        closeModal();
+    });
+
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+}
+
+function lecturer(lectureData) {
+    const result = getCurrentUser();
+    if (!result) return;
+
+    const { user } = result;
+
+    if (user.role !== "lecturer") return;
+
+    $("#cd-btn-color1").textContent = "수정하기";
+    $("#cd-btn-color2").textContent = "삭제하기";
+
+    function handleUpdate() {
         openTwoButtonModal(
             "수정하시겠습니까?<br>확인 버튼을 누르면 강의 수정 페이지로 이동합니다.",
             () => {
@@ -229,22 +253,18 @@ function renderLectureData() {
         );
     }
 
-    // 삭제 버튼 이벤트
-    function handleDelete(lectureData) {
+    function handleDelete() {
         openTwoButtonModal(
             "삭제하시겠습니까?<br>삭제 후엔 되돌릴 수 없습니다.",
             () => {
                 const lectureList = getLectureList();
                 const userList = JSON.parse(localStorage.getItem("userList")) || [];
-
                 const targetContentId = Number(lectureData.contentId);
 
-                // 강의 삭제
                 const updatedLectureList = lectureList.filter(
                     item => Number(item.contentId) !== targetContentId
                 );
 
-                // 유저 데이터 정리
                 userList.forEach(user => {
                     if (Array.isArray(user.shoppingCart)) {
                         user.shoppingCart = user.shoppingCart.filter(
@@ -267,183 +287,129 @@ function renderLectureData() {
         );
     }
 
-    // 수정 / 삭제 버튼 이벤트
-    $("#cd-btn-color1").addEventListener("click", () => handleUpdate(lectureData));
-    $("#cd-btn-color2").addEventListener("click", () => handleDelete(lectureData));
-
+    $("#cd-btn-color1").addEventListener("click", handleUpdate);
+    $("#cd-btn-color2").addEventListener("click", handleDelete);
 }
 
-renderLectureData();
-
-function student() {
-    const params = new URLSearchParams(window.location.search);
-    const contentId = params.get("contentId");
-    const lectureList = getLectureList();
-    const lectureData = lectureList.find(
-        item => item.contentId === Number(contentId)
-    );
-
-    // ✅ 현재 로그인 유저 가져오기
+function student(lectureData) {
     const result = getCurrentUser();
     if (!result) return;
 
     const { user, userIndex, userList } = result;
 
-    if (user.role === "student") {
-        $('#cd-btn-color1').textContent = "장바구니";
-        $('#cd-btn-color2').textContent = "신청하기";
+    if (user.role !== "student") return;
 
-        // 모달 닫기 함수
-        function closeModal() {
-            const activeModal = $(".active-modal");
-            if (activeModal) activeModal.innerHTML = "";
-        }
+    $("#cd-btn-color1").textContent = "장바구니";
+    $("#cd-btn-color2").textContent = "신청하기";
 
-        // 투버튼 모달 열기
-        function openTwoButtonModal(message, onConfirm) {
-            const activeModal = $(".active-modal");
+    function handleCart() {
+        openTwoButtonModal(
+            "장바구니에 추가하시겠습니까?",
+            () => {
+                const currentResult = getCurrentUser();
+                if (!currentResult) return;
 
-            activeModal.innerHTML = `
-        <div class="modal">
-            <div class="modal-container">
-                <div class="modal-top">${message}</div>
-                <div class="modal-bottom">
-                    <div class="modal-box modal-close">취소</div>
-                    <div class="modal-box modal-check">확인</div>
-                </div>
-            </div>
-        </div>
-    `;
+                const { user, userIndex, userList } = currentResult;
+                const lectureList = getLectureList();
 
-            const modal = $(".modal", activeModal);
-            const closeBtn = $(".modal-close", modal);
-            const checkBtn = $(".modal-check", modal);
-            modal.style.display = "flex";
+                const content = lectureList.find(
+                    item => Number(item.contentId) === Number(lectureData.contentId)
+                );
 
-            closeBtn.addEventListener("click", closeModal);
+                if (!content) return;
 
-            checkBtn.addEventListener("click", () => {
-                if (onConfirm) onConfirm();
-                closeModal();
-            });
-
-            modal.addEventListener("click", (e) => {
-                if (e.target === modal) {
-                    closeModal();
+                if (!Array.isArray(user.shoppingCart)) {
+                    user.shoppingCart = [];
                 }
-            });
-        }
 
-        // 장바구니 담기 함수
-        function handleCart(lectureData) {
-            openTwoButtonModal(
-                "장바구니에 추가하시겠습니까?",
-                () => {
-                    const result = getCurrentUser();
-                    if (!result) return;
-
-                    const { user, userIndex, userList } = result;
-
-                    const lectureList = getLectureList();
-                    const content = lectureList.find(
-                        item => Number(item.contentId) === Number(lectureData.contentId)
-                    );
-
-                    if (!content) return;
-
-                    if (!Array.isArray(user.shoppingCart)) {
-                        user.shoppingCart = [];
-                    }
-
-                    if (!Array.isArray(user.appliedLecture)) {
-                        user.appliedLecture = [];
-                    }
-
-                    const exists = user.shoppingCart.some(
-                        item => Number(item.contentId) === Number(content.contentId)
-                    );
-
-                    const applied = user.appliedLecture.some(
-                        item => Number(item.contentId) === Number(content.contentId)
-                    );
-
-                    if (exists) {
-                        alert("이미 장바구니에 담긴 강의입니다.");
-                        return;
-                    }
-
-                    if (applied) {
-                        alert("이미 신청한 강의입니다.");
-                        return;
-                    }
-
-                    user.shoppingCart.push(content);
-
-                    userList[userIndex] = user;
-                    localStorage.setItem("userList", JSON.stringify(userList));
+                if (!Array.isArray(user.appliedLecture)) {
+                    user.appliedLecture = [];
                 }
-            );
-        }
 
-        // 신청하기 함수
-        function handleApply(lectureData) {
-            const today = new Date().toISOString().split("T")[0];
+                const exists = user.shoppingCart.some(
+                    item => Number(item.contentId) === Number(content.contentId)
+                );
 
-            openTwoButtonModal(
-                "신청하시겠습니까?",
-                () => {
-                    const result = getCurrentUser();
-                    if (!result) return;
+                const applied = user.appliedLecture.some(
+                    item => Number(item.contentId) === Number(content.contentId)
+                );
 
-                    const { user, userIndex, userList } = result;
-
-                    const lectureList = getLectureList();
-                    const content = lectureList.find(
-                        item => Number(item.contentId) === Number(lectureData.contentId)
-                    );
-
-                    if (!content) return;
-
-                    if (!Array.isArray(user.appliedLecture)) {
-                        user.appliedLecture = [];
-                    }
-
-                    if (!Array.isArray(user.shoppingCart)) {
-                        user.shoppingCart = [];
-                    }
-
-                    const applied = user.appliedLecture.some(
-                        item => Number(item.contentId) === Number(content.contentId)
-                    );
-
-                    if (applied) {
-                        alert("이미 신청한 강의입니다.");
-                        return;
-                    }
-
-                    const appliedLectureUpdate = {
-                        contentId: content.contentId,
-                        appliedDate: today,
-                        completeContents: 0
-                    };
-
-                    user.appliedLecture.push(appliedLectureUpdate);
-
-                    // 장바구니에서 제거
-                    user.shoppingCart = user.shoppingCart.filter(
-                        item => Number(item.contentId) !== Number(content.contentId)
-                    );
-
-                    userList[userIndex] = user;
-                    localStorage.setItem("userList", JSON.stringify(userList));
+                if (exists) {
+                    alert("이미 장바구니에 담긴 강의입니다.");
+                    return;
                 }
-            );
-        }
 
+                if (applied) {
+                    alert("이미 신청한 강의입니다.");
+                    return;
+                }
 
-        $("#cd-btn-color1").addEventListener("click", () => handleCart(lectureData));
-        $("#cd-btn-color2").addEventListener("click", () => handleApply(lectureData));
+                user.shoppingCart.push(content);
+                userList[userIndex] = user;
+                localStorage.setItem("userList", JSON.stringify(userList));
+                openOneButtonModal("장바구니에 추가되었습니다.");
+            }
+        );
     }
+
+    function handleApply() {
+        const today = new Date().toISOString().split("T")[0];
+
+        openTwoButtonModal(
+            "신청하시겠습니까?",
+            () => {
+                const currentResult = getCurrentUser();
+                if (!currentResult) return;
+
+                const { user, userIndex, userList } = currentResult;
+                const lectureList = getLectureList();
+
+                const content = lectureList.find(
+                    item => Number(item.contentId) === Number(lectureData.contentId)
+                );
+
+                if (!content) return;
+
+                if (!Array.isArray(user.appliedLecture)) {
+                    user.appliedLecture = [];
+                }
+
+                if (!Array.isArray(user.shoppingCart)) {
+                    user.shoppingCart = [];
+                }
+
+                const applied = user.appliedLecture.some(
+                    item => Number(item.contentId) === Number(content.contentId)
+                );
+
+                if (applied) {
+                    alert("이미 신청한 강의입니다.");
+                    return;
+                }
+
+                const appliedLectureUpdate = {
+                    contentId: content.contentId,
+                    appliedDate: today,
+                    completeContents: 0
+                };
+
+                user.appliedLecture.push(appliedLectureUpdate);
+
+                user.shoppingCart = user.shoppingCart.filter(
+                    item => Number(item.contentId) !== Number(content.contentId)
+                );
+
+                userList[userIndex] = user;
+                localStorage.setItem("userList", JSON.stringify(userList));
+                openOneButtonModal("신청되었습니다.");
+            }
+        );
+    }
+
+    $("#cd-btn-color1").addEventListener("click", handleCart);
+    $("#cd-btn-color2").addEventListener("click", handleApply);
 }
 
-student();
+renderLectureData();
+lecturer(lectureData);
+student(lectureData);
