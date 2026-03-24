@@ -5,11 +5,15 @@ const getParams = new URLSearchParams(window.location.search);
 const lecturerId = Number(getParams.get('id'));
 
 const lectureList = contentsListData.filter((sub) => sub.id === lecturerId);
-console.log(lectureList)
+// console.log(lectureList)
 const $totalContents = document.querySelector(".tmm-lector-content-top-ct");
 const $lectureInf = document.querySelector(".tmm-lecture-inf");
 const $lectureInfProfile = document.querySelector(".tmm-lecture-inf-profile");
 const $lectorMainLecture = document.querySelector(".tmm-lector-main-lecture");
+const $lectorProfileImage = document.querySelector(".tmm-lecture-inf-profile");
+
+const $lectorProfileDate = contentsUserListData.find(user => user.id === lecturerId).userProfile;
+$lectorProfileImage.style.backgroundImage = `url(${$lectorProfileDate})`;
 
 // 페이지네이션 코드는 AI로 작성하였습니다. 코드 시작
 let currentPage = 1;
@@ -44,6 +48,7 @@ function lectureMainLectures() {
     mainLectures.forEach((lecture) => {
         $lectorMainLecture.insertAdjacentHTML('beforeend',
             `<div class="tmm-lector-lecture">
+                <div class="tmm-lector-backImg"></div>
                 <div class="tmm-lector-category">${lecture.category}</div>
                 <div class="tmm-lector-lecture-coment-ct">
                     <p class="tmm-lector-lecture-title">${lecture.contentTitle}</p>
@@ -53,6 +58,7 @@ function lectureMainLectures() {
         );
     });
 }
+
 
 
 function userTotalManagement(arrayList) {
@@ -199,3 +205,11 @@ $managerFilter.addEventListener("click", () => {
         ? $managerFilterCt.style.display = "flex"
         : $managerFilterCt.style.display = "none"
 })
+
+
+const lectureImg = document.querySelectorAll('.tmm-lector-backImg');
+
+
+for (let i = 0; i < 4; i++) {
+    lectureImg[i].style.backgroundImage = `url(${lectureList[i].contentImg})`;
+}
