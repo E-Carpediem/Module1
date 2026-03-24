@@ -169,3 +169,5 @@ window.addEventListener('storage', (e) => {
         renderLectures();
     }
 });
+
+localStorage.setItem('navSelect', "home");
