@@ -2,6 +2,12 @@ const contentsListData = JSON.parse(localStorage.getItem('lectureList'));
 
 const $totalContents = document.querySelector(".tc-content-top-ct");
 
+function managermoveNavPath(path) {
+    window.location.href = window.location.origin + `${path}`
+}
+
+
+
 function userTotalManagement(arrayList) {
     document.querySelectorAll('.tc-content').forEach(el => el.remove());
     const pageMaxArray = arrayList.length < 10 ? arrayList.length : 10;
@@ -14,7 +20,7 @@ function userTotalManagement(arrayList) {
             `<div class="tc-content">
         <p> ${i + 1} </p>
         <p> ${arrayList[i].contentId} </p>
-        <p> ${arrayList[i].contentTitle} </p>
+        <p data-contentId="${arrayList[i].contentId}"> ${arrayList[i].contentTitle} </p>
         <p> ${arrayList[i].userName}</p>
         <p> ${arrayList[i].classNumber}명 </p>
         <p> ${arrayList[i].lessonNumber}개 </p>
@@ -23,8 +29,16 @@ function userTotalManagement(arrayList) {
     </div>`)
 
     };
+    const $contentId = document.querySelectorAll('.tc-content>p:nth-child(3)');
+    console.log($contentId);
+    [...$contentId].forEach((e) => {
+        e.addEventListener("click", (id) => {
+            managermoveNavPath(`/components/content-detail.html?contentId=${id.target.dataset.contentid}`);
+        })
+    });
 
     lectureContentsDelete();
+
 
 }
 
@@ -120,13 +134,13 @@ const $managerFilterCt = document.querySelector('.m-fileter');
 
 
 $managerArray.addEventListener("click", () => {
-    $managerArrayCt.style.display === "none" 
-    ? $managerArrayCt.style.display = "flex" 
-    : $managerArrayCt.style.display = "none"
+    $managerArrayCt.style.display === "none"
+        ? $managerArrayCt.style.display = "flex"
+        : $managerArrayCt.style.display = "none"
 })
 
 $managerFilter.addEventListener("click", () => {
     $managerFilterCt.style.display === "none"
-    ? $managerFilterCt.style.display = "flex"
-    : $managerFilterCt.style.display = "none"
+        ? $managerFilterCt.style.display = "flex"
+        : $managerFilterCt.style.display = "none"
 })
