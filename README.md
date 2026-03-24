@@ -15,42 +15,49 @@
 ## 📁 파일 구조
 
 ```bash
-├── components/          # 공통으로 사용되는 함수, 변수, 페이지
-│   ├── modal.html
+├── components/             # 공통으로 사용되는 함수, 변수, 페이지
 │   ├── header.html
 │   ├── nav.html
-│   ├── contentDetail/   # 강의 상세 조회
-│   └── community/       # 커뮤니티
+│   ├── content-detail.html  
+│  
+├── account/                # 계정 
+│   ├── login.html
+│   ├── signup.html     
+│   ├── singup-lecturer.html
+│   ├── signup.student.html     
+│   ├── signup-complete.html          
 │
-├── manager/
-│   ├── main/            # 메인 대시보드
-│   ├── totalMember/     # 회원 전체 조회 (회원, 수강생, 강사)
-│   ├── totalContents/   # 강의 전체 조회
-│   │   └── lecturersContents/  # 강사의 강의 목록 전체 조회
-│   └── sales/           # 매출
+├── community/              # 커뮤니티
+│   ├── index.html        
+│   ├── detail.html
+│   ├── regist.html
 │
-├── student/
-│   ├── main/            # 강의 전체 조회
-│   └── shoppingCart/    # 장바구니
+├── lecturer/               # 강사
+│   ├── index.html            
+│   ├── lecture-regist.html   
+│   ├── lecture-update.html   
+│   ├── students.html
+│   ├── students-detail.html   
 │
-├── lecture/
-│   ├── main/            # 내 강의 전체 조회
-│   ├── lectureEnroll/   # 강의 등록
-│   └── myStudents/      # 수강생 전체 조회
+├── manager/                # 관리자
+│   ├── index.html          
+│   ├── user-total.html    
+│   ├── lecture-total.html
+│   ├── student-total.html   
+│   ├── lecturer-total.html
+│   ├── lecturer-detail.html
+│   └── sales.html
 │
-├── account/
-│   ├── login/           # 로그인
-│   └── signUp/          # 회원가입
+├── student/                # 수강생
+│   ├── index.html            
+│   └── cart.html    
 │
 └── src/
-    ├── assets/
-    │   ├── fonts/
+    ├── assets/             # 리소스
+    │   ├── fonts/ 
     │   └── img/
-    ├── css/
-    └── js/
-        ├── modal.js
-        ├── header.js
-        └── nav.js
+    ├── css/                # css
+    └── js/                 # js
 ```
 
 <br>
