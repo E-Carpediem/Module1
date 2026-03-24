@@ -55,7 +55,7 @@ function lectureTotalManagement(arrayList) {
         <p> ${pageItems[i].signDate} </p>
         <p> ${pageItems[i].membershipSignDate === null ? "-" : pageItems[i].membershipSignDate}</p>
         <p> ${pageItems[i].membershipStatus === true ? "등록" : "미등록"}</p>
-        <p> ${pageItems[i].approvalStatus === true ? "승인" : "미승인"}</p>
+        <p class="tml-lecture-approval "data-approve=${pageItems[i].id}> ${pageItems[i].approvalStatus === true ? "승인" : "미승인"}</p>
         <p> <img src="/src/assets/img/manager-suppoting-document.svg"> </p>
     </div>`
         )
@@ -77,6 +77,56 @@ function lectureTotalManagement(arrayList) {
             managermoveNavPath(`/manager/lecturer-detail.html?id=${id.target.dataset.id}`);
         })
     });
+
+    const $lectureApproval = document.querySelectorAll('.tml-lecture-approval');
+    [...$lectureApproval].forEach((e) => {
+        e.addEventListener("click", (id) => {
+            const lectureId = id.target.dataset.approve;
+            const targetIndex = userListData.findIndex(content => String(content.id) === String(lectureId));
+            const currentStatus = userListData[targetIndex].approvalStatus;
+
+            const message = currentStatus
+                ? `승인을 취소하시겠습니까?<br>취소 후엔 되돌릴 수 없습니다.`
+                : `정말로 승인하시겠습니까?.`;
+
+            document.querySelector('.active-modal').innerHTML = `
+        <div class="modal">
+            <div class="modal-container">
+                <div class="modal-top">
+                    ${message}
+                </div>
+                <div class="modal-bottom">
+                    <div class="modal-box modal-close">취소</div>
+                    <div class="modal-box modal-check">확인</div>
+                </div>
+            </div>
+        </div>`;
+
+            const $modal = document.querySelector(".modal");
+            $modal.style.display = 'flex';
+
+            $modal.querySelector('.modal-close').addEventListener('click', () => closeModal($modal));
+
+            $modal.addEventListener('click', (e) => {
+                if (e.target === $modal) closeModal($modal);
+            });
+
+
+            $modal.querySelector('.modal-check').addEventListener('click', () => {
+                userListData[targetIndex].approvalStatus = !userListData[targetIndex].approvalStatus;
+                localStorage.setItem('userList', JSON.stringify(userListData));
+                closeModal($modal);
+                lectureTotalManagement(currentList);
+            });
+        })
+    });
+
+    function closeModal(modal) {
+        modal.style.display = 'none';
+        if (modal.querySelectorAll("form")) {
+            modal.querySelectorAll("form").forEach((form) => form.reset());
+        }
+    }
 
     renderPagination(arrayList.length);
 }
@@ -113,3 +163,4 @@ $fileterSort.addEventListener('click', () => {
     currentPage = 1; currentList = fileterSort;
     lectureTotalManagement(fileterSort);
 });
+

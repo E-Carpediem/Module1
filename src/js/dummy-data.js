@@ -26,14 +26,15 @@ const userList = [
       {
         "id": 10,
         "contentId": 1,
-        "contentTitle": "React 완전 정복",
+        "contentTitle": "HTML 기초 완성",
         "contentImg": "이미지 경로",
-        "contentPrice": 15000,
+        "contentLevel": "입문",
+        "contentTime": 2,
+        "contentPrice": 10000,
         "userName": "김민준",
-        "contentTime": 130,
-        "contentTotal": 8,
+        "category": "HTML",
         "contentSelect": 3,
-        "contentTotalPrice": 45000
+        "contentTotalPrice": 30000
       }
     ],
     "subscriptionSignDate": "2026-01-10",
@@ -59,14 +60,15 @@ const userList = [
       {
         "id": 11,
         "contentId": 3,
-        "contentTitle": "Vue.js 기초부터 실전까지",
+        "contentTitle": "C++ 포인터와 메모리 관리",
         "contentImg": "이미지 경로",
-        "contentPrice": 20000,
-        "userName": "이수진",
-        "contentTime": 5,
-        "contentTotal": 12,
+        "contentLevel": "어려움",
+        "contentTime": 8,
+        "contentPrice": 32000,
+        "userName": "김민준",
+        "category": "C+",
         "contentSelect": 6,
-        "contentTotalPrice": 120000
+        "contentTotalPrice": 192000
       }
     ],
     "subscriptionSignDate": null,
@@ -114,14 +116,15 @@ const userList = [
       {
         "id": 12,
         "contentId": 2,
-        "contentTitle": "TypeScript 핵심 강의",
+        "contentTitle": "C++ 자료구조와 알고리즘",
         "contentImg": "이미지 경로",
-        "contentPrice": 18000,
-        "userName": "박동현",
-        "contentTime": 10,
-        "contentTotal": 10,
+        "contentLevel": "어려움",
+        "contentTime": 7,
+        "contentPrice": 35000,
+        "userName": "김민준",
+        "category": "C+",
         "contentSelect": 4,
-        "contentTotalPrice": 72000
+        "contentTotalPrice": 140000
       }
     ],
     "subscriptionSignDate": null,
@@ -166,14 +169,15 @@ const userList = [
       {
         "id": 13,
         "contentId": 6,
-        "contentTitle": "Python 데이터 분석 입문",
+        "contentTitle": "JavaScript DOM 조작 실전",
         "contentImg": "이미지 경로",
-        "contentPrice": 25000,
-        "userName": "최서영",
-        "contentTime": 10,
-        "contentTotal": 15,
+        "contentLevel": "쉬움",
+        "contentTime": 7,
+        "contentPrice": 16000,
+        "userName": "이수진",
+        "category": "JavaScript",
         "contentSelect": 7,
-        "contentTotalPrice": 175000
+        "contentTotalPrice": 112000
       }
     ],
     "subscriptionSignDate": null,
@@ -220,14 +224,15 @@ const userList = [
       {
         "id": 14,
         "contentId": 4,
-        "contentTitle": "알고리즘 문제 풀이",
+        "contentTitle": "C++ 객체지향 프로그래밍 완성",
         "contentImg": "이미지 경로",
-        "contentPrice": 12000,
-        "userName": "한지수",
-        "contentTime": 30,
-        "contentTotal": 9,
+        "contentLevel": "보통",
+        "contentTime": 6,
+        "contentPrice": 28000,
+        "userName": "김민준",
+        "category": "C+",
         "contentSelect": 2,
-        "contentTotalPrice": 24000
+        "contentTotalPrice": 56000
       }
     ],
     "subscriptionSignDate": null,
@@ -276,14 +281,15 @@ const userList = [
       {
         "id": 15,
         "contentId": 8,
-        "contentTitle": "Node.js 백엔드 개발",
+        "contentTitle": "CSS 변수와 커스텀 속성 활용",
         "contentImg": "이미지 경로",
-        "contentPrice": 22000,
-        "userName": "조민혁",
-        "contentTime": 340,
-        "contentTotal": 11,
+        "contentLevel": "쉬움",
+        "contentTime": 2,
+        "contentPrice": 13000,
+        "userName": "이수진",
+        "category": "CSS",
         "contentSelect": 5,
-        "contentTotalPrice": 110000
+        "contentTotalPrice": 65000
       }
     ],
     "subscriptionSignDate": "2026-03-15",
@@ -452,6 +458,8 @@ const userList = [
     "membershipSignDate": null
   }
 ]
+
+localStorage.setItem("userList", JSON.stringify(userList));
 localStorage.setItem("userList", JSON.stringify(userList));
 
 const lectureList = [

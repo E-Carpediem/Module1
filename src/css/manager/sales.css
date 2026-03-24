@@ -165,7 +165,6 @@
 .s-payment-top-title-ct>p:nth-child(n),
 .s-payment-content-ct>p:nth-child(n) {
     width: 20%;
-    /* padding : 5px; */
 }
 
 .s-payment-top-title-ct>p:nth-child(2),
@@ -186,7 +185,12 @@
     font-size: 12px;
     font-style: normal;
     font-weight: 500;
+    padding : 5px 0px;
     gap: 20px;
+}
+
+.s-payment-content-ct > p:nth-child(1) {
+        padding-left : 15px;
 }
 
 .s-lectures-sales-ranking-middle-ct {
