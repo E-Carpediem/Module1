@@ -2,7 +2,7 @@ const contentsListData = JSON.parse(localStorage.getItem('lectureList'));
 const contentsUserListData = JSON.parse(localStorage.getItem('userList'));
 
 const getParams = new URLSearchParams(window.location.search);
-const lecturerId = getParams.get('id') - 1;
+const lecturerId = getParams.get('id')-1;
 
 const lectureList = contentsListData.filter((sub) => sub.id === lecturerId);
 console.log(lectureList)
@@ -29,11 +29,11 @@ function userTotalManagement(arrayList) {
 
     // const userTotalPagination = Math.ceil(arrayList.length / 10);
     // const usPaginationCurrentPage = 1;
-    for (let i = pageMaxArray - 1; i >= 0; i--) {
+    for (let i = pageMaxArray-1; i >= 0; i--) {
         $totalContents.insertAdjacentHTML('afterend',
             `<div class="tmm-lector-content">
         <p> ${i + 1} </p>
-        <p> ${arrayList[i].id} </p>
+        <p> ${arrayList[i].contentId} </p>
         <p> ${arrayList[i].contentTitle} </p>
         <p> ${arrayList[i].classNumber}명 </p>
         <p> ${arrayList[i].lessonNumber}개 </p>
@@ -123,7 +123,7 @@ function lectureContentsDelete() {
 function deleteContents(contentId) {
     console.log('삭제 요청 contentId:', contentId); 
     const targetIndex = contentsListData.findIndex(item => String(item.contentId) === contentId);
-    contentsListData.splice(targetIndex, 1);
+    contentsListData.splice(targetIndex , 1);
     localStorage.setItem('lectureList', JSON.stringify(contentsListData));
     const LectureList = contentsListData.filter(sub => sub.id === lecturerId);
     userTotalManagement(LectureList);

@@ -63,7 +63,7 @@ fetch("/components/header.html")
                     $headerSubStatus.classList.add('c-profile-student-unSub');
                     $headerSubStatus.innerText = "미구독";
                 }
-            } else if (headerLocalStorage.role === "lecture") {
+            } else if (headerLocalStorage.role === "lecturer") {
                 if (headerLocalStorage.membershipStatus === true) {
                     $headerSubStatus.classList.add('c-profile-lecture-sub');
                     $headerSubStatus.innerText = "등록중";
