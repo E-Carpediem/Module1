@@ -50,7 +50,6 @@ function getContentIdFromUrl() {
 }
 
 const targetContentId = getContentIdFromUrl();
-console.log('?', targetContentId);
 
 // 수정할 강의 찾는 함수
 function getTargetLecture() {

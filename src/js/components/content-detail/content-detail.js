@@ -15,17 +15,18 @@ const store = {
 // 사용자 입력값에서 HTML 미적용
 function escapeHTML(value) {
     return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#39;");
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
 }
 
-// local storage에서 강의 리스트 가져오는 함수
+// local storage -> lectureList 저장하는 함수
 function setLectureList(lectureList) {
     store.setLocalStorage("lectureList", lectureList);
 }
+// local storage -> lectureList 가져오는 함수
 function getLectureList() {
     return JSON.parse(localStorage.getItem("lectureList")) || [];
 }
@@ -47,7 +48,6 @@ function getCurrentUser() {
         userList
     };
 }
-console.log(getCurrentUser());
 
 // 해당 강의의 localStorage 값을 받아와서 강의 상세 조회에 반영하는 함수
 function renderLectureData() {
@@ -55,9 +55,8 @@ function renderLectureData() {
     const contentId = params.get("contentId");
     const lectureList = getLectureList();
     const lectureData = lectureList.find(item => item.contentId === Number(contentId));
-    
-    if (!lectureData) return null;
-    
+
+    // 수강 후에는 input에 들어오는 배열값을 동적으로 추가하는 함수
     function createAfter(contentAfter) {
         return (contentAfter || []).map((item, index) => {
             return `
@@ -73,6 +72,7 @@ function renderLectureData() {
         }).join("");
     }
 
+    // 커리큘럼에 동적으로 추가하는 함수
     function createCurry(contentCurry) {
         return (contentCurry || []).map((curry, index) => {
             const lessonsHTML = Array.isArray(curry.lessons)
@@ -97,6 +97,7 @@ function renderLectureData() {
         }).join("");
     }
 
+    // 전체 html에 해당 강의의 내용 반영
     $(".cd-side-margin").innerHTML = `
         <article class="cd-lecture-img"></article>
         <article class="cd-main-container">
@@ -149,6 +150,7 @@ function renderLectureData() {
         </article>
     `;
 
+    // 미니 nav바에서 커리큘럼을 클릭 시 커리큘럼 쪽으로 스크롤
     $("#cd-nav-curry").addEventListener("click", () => {
         $("#cd-curry-container").scrollIntoView({
             behavior: "smooth",
@@ -156,6 +158,7 @@ function renderLectureData() {
         });
     });
 
+    // 미니 nav바에서 커뮤니티를 클릭 시 커뮤니티 페이지로 이동
     $("#cd-nav-community").addEventListener("click", () => {
         window.location.href = `/community/index.html?contentId=${encodeURIComponent(lectureData.contentId)}`;
     });
@@ -235,7 +238,6 @@ function openOneButtonModal(message) {
 
 function lecturer(lectureData) {
     const result = getCurrentUser();
-    if (!result) return;
 
     const { user } = result;
 
@@ -410,6 +412,56 @@ function student(lectureData) {
     $("#cd-btn-color2").addEventListener("click", handleApply);
 }
 
-renderLectureData();
+function manager(lectureData) {
+    const result = getCurrentUser();
+    if (!result) return;
+
+    const { user } = result;
+
+    if (user.role !== "manager") return;
+
+    $("#cd-btn-color1").style.display = "none";
+    $("#cd-btn-color2").style.display = "block";
+    $("#cd-btn-color2").textContent = "삭제하기";
+
+    function handleDelete() {
+        openTwoButtonModal(
+            "삭제하시겠습니까?<br>삭제 후엔 되돌릴 수 없습니다.",
+            () => {
+                const lectureList = getLectureList();
+                const userList = JSON.parse(localStorage.getItem("userList")) || [];
+                const targetContentId = Number(lectureData.contentId);
+
+                const updatedLectureList = lectureList.filter(
+                    item => Number(item.contentId) !== targetContentId
+                );
+
+                userList.forEach(user => {
+                    if (Array.isArray(user.shoppingCart)) {
+                        user.shoppingCart = user.shoppingCart.filter(
+                            item => Number(item.contentId) !== targetContentId
+                        );
+                    }
+
+                    if (Array.isArray(user.appliedLecture)) {
+                        user.appliedLecture = user.appliedLecture.filter(
+                            item => Number(item.contentId) !== targetContentId
+                        );
+                    }
+                });
+
+                setLectureList(updatedLectureList);
+                localStorage.setItem("userList", JSON.stringify(userList));
+
+                window.location.href = "/lecturer/index.html";
+            }
+        );
+    }
+
+    $("#cd-btn-color2").addEventListener("click", handleDelete);
+}
+
+const lectureData = renderLectureData();
 lecturer(lectureData);
 student(lectureData);
+manager(lectureData);

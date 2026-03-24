@@ -43,7 +43,6 @@ function getLectureList() {
 const lectureList = getLectureList();
 let currentUserId = myInfo.id;
 let currentUserName = myInfo.userName;
-console.log(currentUserName);
 
 // 숫자만 입력가능하게 하는 함수
 function inputNumber(inputElement) {
@@ -155,7 +154,6 @@ formCurry.addEventListener("click", (e) => {
     if (e.target.classList.contains("le-add-small")) {
         const currentGroup = e.target.closest(".le-add-big");
         const bigInput = $(".le-content-curry", currentGroup);
-        console.log(bigInput);
         const bigIndex = bigInput.id.replace("le-content-curry", "");
         const nextSmallIndex = getNextSmallIndex(currentGroup);
 
@@ -420,7 +418,7 @@ function collectLectureData() {
     };
 }
 
-// 강의 목록에 새 강의 추가 저장
+// localStorage -> lectureList에 등록한 강의를 저장하는 함수
 function saveLectureData() {
     const lectureList = store.getLocalStorage("lectureList", []);
     const newLecture = collectLectureData();
