@@ -93,6 +93,7 @@ function Regist() {
             $('.cm-modify-btn').classList.remove('none');
             $('#cm-title-input').value = modifyQuestion.questionTitle;
             $('#cm-content-textarea').value = modifyQuestion.questionContent;
+            $('.cm-content-ct>p').innerText = `${$('.cm-content-ct>textarea').value.length}/1000`;
         }
 
     }
@@ -116,6 +117,14 @@ function Regist() {
 
     $('.cm-content-ct>textarea').addEventListener('input', () => {
         $('.cm-content-ct>p').innerText = `${$('.cm-content-ct>textarea').value.length}/1000`;
+    })
+
+    $('.cm-top-ct>button').addEventListener('click', () => {
+        activeTwoModal(() => {
+            closeModal($('.modal')); history.back();
+            localStorage.removeItem('modifyQuestion');
+        }, '저장되지 않았습니다.<br>나가시겠습니까?');
+
     })
 
     //등록 버튼
@@ -180,6 +189,7 @@ function Regist() {
         } else {
             activeOneModal(() => closeModal($('.modal')), '값을 입력해주세요.');
         }
+
 
 
 
